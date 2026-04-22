@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Anniversary 1st of Max & Fah</title>
+    <title>Happy Anniversary 1st Year of Us</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -14,50 +14,52 @@
         }
         body { 
             font-family: 'Mali', cursive; 
-            background-color: #fff0f3;
+            background-color: #fff5f7;
             background-image: 
-                radial-gradient(#ffc2d1 1.5px, transparent 1.5px);
-            background-size: 24px 24px;
+                radial-gradient(#ffcad4 1.2px, transparent 1.2px);
+            background-size: 20px 20px;
             overflow: hidden;
             touch-action: none;
         }
 
-        .game-frame {
-            background: white;
-            border: 6px solid #fff;
-            border-radius: 3.5rem;
+        /* กรอบเครื่องเล่นเกม */
+        .game-console {
+            background: #ffffff;
+            border: 8px solid #ffffff;
+            border-radius: 4rem;
             box-shadow: 
-                0 15px 40px rgba(251, 111, 146, 0.25),
-                inset 0 0 20px rgba(255, 143, 163, 0.05);
+                0 25px 50px -12px rgba(251, 111, 146, 0.4),
+                inset 0 -8px 0 #fecdd3;
             position: relative;
         }
 
         canvas {
             display: block;
-            border-radius: 3rem;
-            background: linear-gradient(to bottom, #ffffff, #fffafa);
+            border-radius: 3.2rem;
+            background: #ffffff;
         }
 
-        /* ปุ่มควบคุมแบบ SVG */
+        /* ปุ่มควบคุมแบบ SVG - ปรับปรุงใหม่ */
         .control-btn {
-            background: white;
-            border-radius: 1.2rem;
-            width: 65px;
-            height: 65px;
+            background: #ffffff;
+            border-radius: 1.5rem;
+            width: 62px;
+            height: 62px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 6px 0 #ffb3c1;
-            transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.1s ease;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-            padding: 12px;
+            padding: 14px;
+            border: 1px solid #ffe4e6;
         }
         .control-btn svg {
             width: 100%;
             height: 100%;
             fill: #fb6f92;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
+            display: block;
         }
         .control-btn:active {
             transform: translateY(4px);
@@ -65,105 +67,108 @@
             background-color: #fff9fa;
         }
 
+        /* หน้าต่างแจ้งเตือน */
         .modal-overlay {
-            background: rgba(45, 15, 25, 0.2);
-            backdrop-filter: blur(12px);
+            background: rgba(255, 175, 190, 0.3);
+            backdrop-filter: blur(10px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            padding: 20px;
+            padding: 24px;
         }
         .modal-overlay.active { display: flex; }
 
         .popup {
             background: white;
-            border-radius: 2.5rem;
+            border-radius: 3rem;
             width: 100%;
-            max-width: 340px;
-            padding: 1.2rem;
+            max-width: 320px;
+            padding: 1.5rem;
             text-align: center;
-            border: 4px solid #fff;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-            transform: translateY(20px);
+            border: 4px solid #ffffff;
+            box-shadow: 0 20px 40px rgba(251, 111, 146, 0.2);
+            transform: scale(0.9);
             opacity: 0;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .modal-overlay.active .popup { 
-            transform: translateY(0); 
+            transform: scale(1); 
             opacity: 1;
         }
 
         .puffy-button {
-            background: linear-gradient(135deg, #ff8fa3, #fb6f92);
+            background: linear-gradient(180deg, #ffb3c1, #fb6f92);
             color: white;
-            border-radius: 1.5rem;
+            border-radius: 1.8rem;
             padding: 1.1rem;
             width: 100%;
             font-weight: 700;
-            font-size: 1.2rem;
-            box-shadow: 0 8px 20px rgba(251, 111, 146, 0.3);
-            border: 2px solid rgba(255,255,255,0.2);
+            font-size: 1.1rem;
+            box-shadow: 0 6px 15px rgba(251, 111, 146, 0.3);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
-        .glow-heart {
-            filter: drop-shadow(0 0 8px rgba(251, 111, 146, 0.6));
+        .heart-icon { animation: heartBeat 1.5s infinite; }
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-between min-h-screen p-4 py-6">
+<body class="flex flex-col items-center justify-between min-h-screen p-4 py-8">
 
-    <!-- ส่วนหัว -->
+    <!-- Header -->
     <div class="text-center">
-        <h1 class="text-3xl font-bold text-[#fb6f92] drop-shadow-sm">Our Adventure 🎀</h1>
-        <div id="status" class="bg-white/90 px-5 py-1.5 rounded-full text-xs text-[#ff8fa3] font-bold border border-rose-100 mt-2 shadow-sm inline-block">
-            Step 1: จุดเริ่มต้น
-        </div>
+        <h1 class="text-3xl font-bold text-[#fb6f92] flex items-center justify-center gap-2">
+            Our Journey <span class="heart-icon">💝</span>
+        </h1>
+        <p id="status" class="text-[#ff8fa3] text-sm mt-1 font-bold">บี๋ลองเล่นเกมที่เค้าทำดูนะคั้บบ</p>
     </div>
 
-    <!-- หน้าจอเกม -->
-    <div class="game-frame w-full max-w-[340px] border-8">
-        <canvas id="gameCanvas" width="340" height="380"></canvas>
+    <!-- Game Console Screen -->
+    <div class="game-console w-full max-w-[340px]">
+        <canvas id="gameCanvas" width="340" height="360"></canvas>
     </div>
 
-    <!-- ปุ่มควบคุม (ใช้ SVG แทนลูกศร) -->
-    <div class="grid grid-cols-3 gap-3 mb-2">
+    <!-- Directional Controls (SVG Fixed) -->
+    <div class="grid grid-cols-3 gap-3">
         <div></div>
-        <div id="up" class="control-btn">
-            <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
-        </div>
+        <button id="up" class="control-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 3l-9 9h6v9h6v-9h6z"/></svg>
+        </button>
         <div></div>
-        <div id="left" class="control-btn">
-            <svg viewBox="0 0 24 24"><path d="M4 12l8 8v-5h8v-6h-8v-5z"/></svg>
-        </div>
-        <div id="down" class="control-btn">
-            <svg viewBox="0 0 24 24"><path d="M12 20l8-8h-5v-8h-6v8h-5z"/></svg>
-        </div>
-        <div id="right" class="control-btn">
-            <svg viewBox="0 0 24 24"><path d="M20 12l-8-8v5h-8v-6h8v-5z"/></svg>
-        </div>
+        <button id="left" class="control-btn">
+            <svg viewBox="0 0 24 24"><path d="M3 12l9 9v-6h9v-6h-9v-6z"/></svg>
+        </button>
+        <button id="down" class="control-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 21l9-9h-6v-9h-6v9h-6z"/></svg>
+        </button>
+        <button id="right" class="control-btn">
+            <svg viewBox="0 0 24 24"><path d="M21 12l-9-9v6h-9v6h9v6z"/></svg>
+        </button>
     </div>
 
-    <!-- ระบบ Modal -->
+    <!-- Memory Modal -->
     <div id="modalOverlay" class="modal-overlay fixed inset-0">
         <div class="popup">
-            <div class="w-full aspect-[4/3] bg-[#fff0f3] rounded-3xl mb-5 overflow-hidden border-2 border-[#ffe5ec] relative shadow-inner">
+            <div class="w-full aspect-square bg-[#fff0f3] rounded-[2.5rem] mb-5 overflow-hidden border-2 border-[#ffe5ec] shadow-inner">
                 <img id="modalImg" src="" class="w-full h-full object-cover">
             </div>
             <h2 id="modalTitle" class="text-xl font-bold text-[#fb6f92] mb-2"></h2>
-            <p id="modalDesc" class="text-slate-500 text-sm mb-6 leading-relaxed px-2"></p>
+            <p id="modalDesc" class="text-slate-500 text-xs mb-6 px-2"></p>
             <button id="closeBtn" class="puffy-button active:scale-95 transition-transform">
                 รักจัง เดินต่อเลย ❤️
             </button>
         </div>
     </div>
 
-    <!-- ฉากจบ -->
-    <div id="finalScene" class="fixed inset-0 bg-[#fb6f92] hidden flex-col items-center justify-center p-10 text-center z-[2000]">
-        <div class="text-8xl mb-6 animate-bounce">💝</div>
-        <h2 class="text-4xl font-bold text-white mb-4">Happy 1st Year!</h2>
-        <p class="text-white/90 mb-10 italic font-light">"ขอบคุณที่เดินมาถึงตรงนี้ และขอบคุณที่อยู่ด้วยกันมาตลอดนะฟ้า"</p>
-        <button onclick="location.reload()" class="bg-white text-[#fb6f92] px-10 py-4 rounded-full font-bold shadow-2xl">Restart the Love ☁️</button>
+    <!-- Final Result -->
+    <div id="finalScene" class="fixed inset-0 bg-white hidden flex-col items-center justify-center p-10 text-center z-[2000]">
+        <div class="text-8xl mb-8">🎡</div>
+        <h2 class="text-3xl font-bold text-[#fb6f92] mb-4">You found all the love!</h2>
+        <p class="text-slate-400 mb-10 italic">"ขอบคุณ 1 ปีที่น่ารัก และขอบคุณที่อยู่เคียงข้างกันเสมอมา"</p>
+        <button onclick="location.reload()" class="bg-[#fb6f92] text-white px-12 py-4 rounded-full font-bold shadow-lg shadow-rose-200">Restart Adventure</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -179,51 +184,41 @@
         let gameState = {
             step: 0,
             isModalOpen: false,
-            player: { x: 145, y: 300, size: 50, speed: 5.5, dx: 0, dy: 0 }
+            player: { x: 145, y: 280, size: 50, speed: 5, dx: 0, dy: 0 }
         };
 
         const checkpoints = [
-            { x: 70, y: 240, t: "จุดเริ่มต้น 💌", d: "วันแรกที่คุยกัน ใครจะคิดว่าเราจะมาไกลขนาดนี้ ขอบคุณที่เปิดใจให้เค้านะ", i: "https://images.unsplash.com/photo-1518199266791-5375a83190b7", v: false },
-            { x: 270, y: 160, t: "คนพิเศษ 🌸", d: "ฟ้าเป็นคนที่น่ารักที่สุดในโลกสำหรับเค้า ไม่ว่าวันไหนฟ้าก็ทำให้เค้ายิ้มได้เสมอ", i: "https://images.unsplash.com/photo-1522673607200-1648832cee98", v: false },
-            { x: 100, y: 70, t: "ความรัก 1 ปี 🎂", d: "หนึ่งปีที่ผ่านมามันมหัศจรรย์มาก เค้าสัญญาว่าจะรักและดูแลฟ้าให้ดีที่สุดเลยนะ", i: "https://images.unsplash.com/photo-1494972308845-d171197eaa97", v: false }
+            { x: 80, y: 220, t: "ความประทับใจแรก 🌷", d: "เค้ายังจำได้ดีเลยว่าวันนั้นฟ้าใส่ชุดอะไร ความทรงจำเล็กๆ ที่มีค่าที่สุด", i: "https://images.unsplash.com/photo-1518199266791-5375a83190b7", v: false },
+            { x: 260, y: 140, t: "ที่พักใจของเค้า ☁️", d: "ไม่ว่าวันนั้นจะเหนื่อยแค่ไหน แค่ได้คุยกับฟ้า ทุกอย่างก็หายเป็นปลิดทิ้ง", i: "https://images.unsplash.com/photo-1522673607200-1648832cee98", v: false },
+            { x: 120, y: 50, t: "ของขวัญที่ดีที่สุด 🎁", d: "การมีฟ้าในชีวิตคือของขวัญที่ดีที่สุดที่เค้าเคยได้รับเลยนะ", i: "https://images.unsplash.com/photo-1494972308845-d171197eaa97", v: false }
         ];
 
-        // ระบบควบคุม
-        const setupBtn = (id, dx, dy) => {
-            const btn = document.getElementById(id);
-            const start = (e) => { 
-                e.preventDefault(); 
-                if(!gameState.isModalOpen) { 
-                    gameState.player.dx = dx; 
-                    gameState.player.dy = dy; 
-                } 
-            };
-            const stop = (e) => { 
-                e.preventDefault(); 
-                gameState.player.dx = 0; 
-                gameState.player.dy = 0; 
-            };
-            btn.addEventListener('touchstart', start);
-            btn.addEventListener('touchend', stop);
-            btn.addEventListener('mousedown', start);
-            btn.addEventListener('mouseup', stop);
-            btn.addEventListener('mouseleave', stop);
+        // Improved Controls
+        const handleInput = (id, dx, dy) => {
+            const el = document.getElementById(id);
+            const start = (e) => { e.preventDefault(); if(!gameState.isModalOpen) { gameState.player.dx = dx; gameState.player.dy = dy; } };
+            const stop = (e) => { e.preventDefault(); gameState.player.dx = 0; gameState.player.dy = 0; };
+            el.addEventListener('touchstart', start);
+            el.addEventListener('touchend', stop);
+            el.addEventListener('mousedown', start);
+            el.addEventListener('mouseup', stop);
+            el.addEventListener('mouseleave', stop);
         };
 
-        setupBtn('up', 0, -gameState.player.speed);
-        setupBtn('down', 0, gameState.player.speed);
-        setupBtn('left', -gameState.player.speed, 0);
-        setupBtn('right', gameState.player.speed, 0);
+        handleInput('up', 0, -gameState.player.speed);
+        handleInput('down', 0, gameState.player.speed);
+        handleInput('left', -gameState.player.speed, 0);
+        handleInput('right', gameState.player.speed, 0);
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // วาดเส้นทาง
-            ctx.setLineDash([8, 8]);
-            ctx.strokeStyle = '#ffe5ec';
+            // Path
+            ctx.setLineDash([10, 10]);
+            ctx.strokeStyle = '#ffe4e6';
             ctx.lineWidth = 4;
             ctx.beginPath();
-            ctx.moveTo(170, 350);
+            ctx.moveTo(170, 320);
             checkpoints.forEach((cp, i) => {
                 if(i <= gameState.step) ctx.strokeStyle = '#fb6f92';
                 ctx.lineTo(cp.x, cp.y);
@@ -232,7 +227,7 @@
                 ctx.moveTo(cp.x, cp.y);
             });
 
-            // วาดหัวใจ
+            // Target Hearts
             checkpoints.forEach((cp, i) => {
                 ctx.font = '32px serif';
                 ctx.textAlign = 'center';
@@ -245,22 +240,21 @@
                     ctx.fillText('🤍', cp.x, cp.y + 12);
                     ctx.restore();
                 } else {
-                    ctx.globalAlpha = 0.2;
+                    ctx.globalAlpha = 0.3;
                     ctx.fillText('🔒', cp.x, cp.y + 12);
                     ctx.globalAlpha = 1.0;
                 }
             });
 
-            // วาดตัวละคร
+            // Character
             const p = gameState.player;
             ctx.save();
-            ctx.shadowBlur = 15;
-            ctx.shadowColor = 'rgba(251, 111, 146, 0.4)';
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = 'rgba(251, 111, 146, 0.25)';
             ctx.beginPath();
-            ctx.arc(p.x + p.size/2, p.y + p.size/2, p.size/2 + 4, 0, Math.PI*2);
+            ctx.arc(p.x + p.size/2, p.y + p.size/2, p.size/2 + 3, 0, Math.PI*2);
             ctx.fillStyle = 'white';
             ctx.fill();
-            
             ctx.beginPath();
             ctx.arc(p.x + p.size/2, p.y + p.size/2, p.size/2, 0, Math.PI*2);
             ctx.clip();
@@ -270,18 +264,16 @@
 
         function update() {
             if(gameState.isModalOpen) return;
-
             const p = gameState.player;
             p.x += p.dx;
             p.y += p.dy;
-
             p.x = Math.max(10, Math.min(canvas.width - p.size - 10, p.x));
             p.y = Math.max(10, Math.min(canvas.height - p.size - 10, p.y));
 
             const target = checkpoints[gameState.step];
             if(target) {
-                const dist = Math.hypot(p.x + p.size/2 - target.x, p.y + p.size/2 - target.y);
-                if(dist < 32) {
+                const d = Math.hypot(p.x + p.size/2 - target.x, p.y + p.size/2 - target.y);
+                if(d < 30) {
                     target.v = true;
                     openModal(target);
                 }
@@ -298,31 +290,28 @@
             overlay.classList.add('active');
         }
 
-        document.getElementById('closeBtn').onclick = function() {
+        document.getElementById('closeBtn').onclick = () => {
             overlay.classList.remove('active');
-            // หน่วงเวลาเล็กน้อยเพื่อให้ Animation การปิดดูนุ่มนวล
             setTimeout(() => {
                 gameState.isModalOpen = false;
                 gameState.step++;
-                
                 if(gameState.step >= checkpoints.length) {
                     confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
                     setTimeout(() => {
                         document.getElementById('finalScene').style.display = 'flex';
-                    }, 800);
+                    }, 500);
                 } else {
-                    statusText.innerText = `Step ${gameState.step + 1}: ${checkpoints[gameState.step].t}`;
+                    statusText.innerText = `ด่านต่อไป: ${checkpoints[gameState.step].t}`;
                 }
-            }, 100);
+            }, 300);
         };
 
-        function gameLoop() {
+        function loop() {
             update();
             draw();
-            requestAnimationFrame(gameLoop);
+            requestAnimationFrame(loop);
         }
-
-        gameLoop();
+        loop();
     </script>
 </body>
 </html>
