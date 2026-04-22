@@ -3,209 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 1st Anniversary | For Fah</title>
+    <title>1st Anniversary | Our Eternal Story</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <!-- AOS Library for scroll animations -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
-            --primary-pink: #ff85a2;
-            --soft-pink: #fce7f3;
+            --primary: #ff4d6d;
+            --secondary: #ffb1c1;
         }
         body { 
-            font-family: 'Prompt', sans-serif; 
+            font-family: 'Noto Sans Thai', sans-serif; 
+            background: #fffafa;
+            overflow: hidden; /* ล็อกเพื่อให้ใช้ระบบ Snap Scroll */
+        }
+        .font-cursive { font-family: 'Great Vibes', cursive; }
+        
+        /* ระบบ Page Snap */
+        .snap-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
-            overflow-x: hidden;
         }
-        .font-romantic {
-            font-family: 'Dancing Script', cursive;
+        .snap-section {
+            height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .gradient-bg { 
-            background: linear-gradient(180deg, #fff5f7 0%, #fce7f3 100%); 
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 2rem;
         }
-        /* Floating hearts effect */
+
+        /* Navigation Dots */
+        .nav-dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 77, 109, 0.3);
+            border-radius: 50%;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .dot.active {
+            background: var(--primary);
+            transform: scale(1.5);
+        }
+
+        /* Heart Particles */
         .heart-particle {
             position: absolute;
             pointer-events: none;
-            animation: floatUp 15s linear infinite;
-            opacity: 0.3;
+            z-index: 1;
+            animation: floatUp 10s linear infinite;
         }
         @keyframes floatUp {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(110vh) scale(0); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
-        /* Smooth reveal for images */
-        .img-container img {
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .img-container:hover img {
-            transform: scale(1.05);
-        }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #ffb1c1; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-white text-slate-800">
+<body>
 
-    <!-- Floating Background Elements -->
-    <div id="hearts-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+    <nav class="nav-dots hidden md:block">
+        <div class="dot active" onclick="scrollToSection(0)"></div>
+        <div class="dot" onclick="scrollToSection(1)"></div>
+        <div class="dot" onclick="scrollToSection(2)"></div>
+        <div class="dot" onclick="scrollToSection(3)"></div>
+    </nav>
 
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex flex-col items-center justify-center text-center p-6 gradient-bg z-10">
-        <div data-aos="zoom-in" data-aos-duration="1500" class="mb-4 text-6xl">💖</div>
-        <h1 data-aos="fade-up" data-aos-delay="300" class="text-5xl md:text-7xl font-bold text-pink-500 mb-4 font-romantic">
-            Happy 1st Anniversary
-        </h1>
-        <p data-aos="fade-up" data-aos-delay="600" class="text-xl md:text-2xl text-pink-400 font-light max-w-lg">
-            ขอบคุณที่เกิดมาเป็นผู้หญิงให้เค้ารักได้ขนาดนี้นะ "ฟ้า"
-        </p>
-        <div data-aos="fade-up" data-aos-delay="900" class="mt-12">
-            <a href="#story" class="group relative px-8 py-3 bg-pink-500 text-white rounded-full shadow-xl hover:bg-pink-600 transition-all overflow-hidden inline-block">
-                <span class="relative z-10">ลองเลื่อนดูจิ</span>
-                <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
-            </a>
-        </div>
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 animate-bounce text-pink-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-        </div>
-    </section>
+    <div id="bg-hearts" class="fixed inset-0 pointer-events-none z-0"></div>
 
-    <!-- Content Sections -->
-    <section id="story" class="relative py-32 px-6 max-w-5xl mx-auto z-10">
-        <div class="text-center mb-20" data-aos="fade-up">
-            <h2 class="text-4xl font-bold text-slate-700 mb-2">Our Journey</h2>
-            <div class="h-1 w-20 bg-pink-400 mx-auto rounded-full"></div>
-        </div>
+    <div class="snap-container" id="main-scroll">
+        
+        <section class="snap-section bg-[#fff0f3]">
+            <div class="text-center z-10 p-6" data-aos="zoom-out">
+                <h1 class="text-7xl md:text-9xl font-cursive text-pink-500 mb-6 drop-shadow-sm">
+                    Happy Anniversary
+                </h1>
+                <p class="text-2xl md:text-3xl text-pink-400 font-light mb-12">
+                    "ฟ้าคือของขวัญที่ดีที่สุดของเค้าเลยนะ"
+                </p>
+                <button onclick="scrollToSection(1)" class="animate-bounce p-4 rounded-full bg-white shadow-lg text-pink-500 transition-transform active:scale-90">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 13l-7 7-7-7" />
+                    </svg>
+                </button>
+            </div>
+        </section>
 
-        <div class="space-y-32">
-            <!-- Story 1 -->
-            <div class="flex flex-col md:flex-row gap-12 items-center">
-                <div class="w-full md:w-1/2" data-aos="fade-right" data-aos-duration="1000">
-                    <div class="img-container aspect-[4/3] bg-pink-100 rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
-                        <!-- Replace with actual photo URL -->
-                        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=800" alt="First Day" class="w-full h-full object-cover">
+        <section class="snap-section bg-white">
+            <div class="max-w-6xl w-full mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <div class="glass-card p-4 rotate-3 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1511108690759-009324a903df?auto=format&fit=crop&q=80&w=800" class="rounded-xl w-full aspect-square object-cover">
                     </div>
                 </div>
-                <div class="w-full md:w-1/2 space-y-4" data-aos="fade-left" data-aos-delay="200">
-                    <span class="text-pink-400 font-bold tracking-widest text-sm uppercase">The Beginning</span>
-                    <h3 class="text-3xl font-semibold text-slate-800">Day 1: จุดเริ่มต้น</h3>
-                    <p class="text-lg text-slate-600 leading-relaxed">
-                        จำวันแรกที่เราตกลงคบกันได้ไหม? วันนั้นเป็นวันที่เค้าใจเต้นแรงที่สุดเลยนะ ทุกอย่างมันดูใหม่และตื่นเต้นไปหมด ขอบคุณที่เปิดใจให้เค้าตั้งแต่วันนั้นนะฟ้า
+                <div class="space-y-6" data-aos="fade-left">
+                    <h3 class="text-5xl font-bold text-pink-500 italic">Day 1: จุดเริ่มต้น</h3>
+                    <p class="text-xl text-slate-600 leading-relaxed font-light">
+                        เค้ายังจำแววตาของฟ้าในวันแรกได้เสมอ... ขอบคุณที่อนุญาตให้เค้าได้เดินเข้ามาในโลกของฟ้านะ
                     </p>
                 </div>
             </div>
+        </section>
 
-            <!-- Story 2 -->
-            <div class="flex flex-col md:flex-row-reverse gap-12 items-center">
-                <div class="w-full md:w-1/2" data-aos="fade-left" data-aos-duration="1000">
-                    <div class="img-container aspect-[4/3] bg-pink-100 rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
-                        <!-- Replace with actual photo URL -->
-                        <img src="https://images.unsplash.com/photo-1522673607200-1648832cee98?auto=format&fit=crop&q=80&w=800" alt="Special Memory" class="w-full h-full object-cover">
+        <section class="snap-section bg-[#fff5f7]">
+            <div class="max-w-6xl w-full mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div class="md:order-2" data-aos="fade-left">
+                    <div class="glass-card p-4 -rotate-3 shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1494972308845-d171197eaa97?auto=format&fit=crop&q=80&w=800" class="rounded-xl w-full aspect-square object-cover">
                     </div>
                 </div>
-                <div class="w-full md:w-1/2 space-y-4 text-right md:text-left" data-aos="fade-right" data-aos-delay="200">
-                    <span class="text-pink-400 font-bold tracking-widest text-sm uppercase">First Trip</span>
-                    <h3 class="text-3xl font-semibold text-slate-800">ความทรงจำที่แสนพิเศษ</h3>
-                    <p class="text-lg text-slate-600 leading-relaxed">
-                        การได้ออกไปเที่ยวด้วยกันครั้งแรก ทำให้เค้ารู้เลยว่าการมีเธออยู่ข้างๆ มันทำให้ทุกที่สวยขึ้นกว่าเดิมเยอะเลย ขอบคุณที่เป็น Partner ที่ดีที่สุดในชีวิตเค้านะ
+                <div class="space-y-6 md:order-1 text-right" data-aos="fade-right">
+                    <h3 class="text-5xl font-bold text-pink-500 italic">The Journey</h3>
+                    <p class="text-xl text-slate-600 leading-relaxed font-light">
+                        เราผ่านอะไรด้วยกันมาเยอะมาก ทั้งเสียงหัวเราะและน้ำตา แต่นั่นแหละที่ทำให้เรารู้ว่า 'เราสำคัญต่อกันแค่ไหน'
                     </p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Message Section -->
-    <section class="py-32 bg-pink-50 relative overflow-hidden z-10">
-        <div class="max-w-3xl mx-auto text-center px-6" data-aos="zoom-in">
-            <div class="mb-8 text-pink-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto opacity-50" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14.017 21L14.017 18C14.017 16.8954 13.1216 16 12.017 16C10.9124 16 10.017 16.8954 10.017 18L10.017 21H14.017ZM14.017 21H18C19.1046 21 20 20.1046 20 19V10C20 8.89543 19.1046 8 18 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H10.017" stroke="currentColor" stroke-width="2"/>
-                </svg>
+        <section class="snap-section bg-[#1a1a1a] text-white">
+            <div class="text-center z-10 px-6" data-aos="zoom-in">
+                <div class="mb-12 inline-block p-6 rounded-full border-2 border-pink-500/30 animate-pulse text-6xl">🔒</div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-8">Our Eternal Promise</h2>
+                <button id="unlock-btn" class="group relative bg-white text-black px-12 py-5 rounded-full font-bold overflow-hidden transition-all hover:scale-105">
+                    <span class="relative z-10 uppercase tracking-widest">Unlock Our Future 🔑</span>
+                    <div class="absolute inset-0 bg-pink-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                </button>
             </div>
-            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-pink-600 font-romantic leading-tight">
-                "ขอบคุณที่คอยซัพพอร์ตกันเสมอมานะ"
-            </h2>
-            <p class="text-lg text-slate-600 mb-12 leading-loose">
-                ไม่ว่าจะเป็นเรื่องงาน เรื่องเหนื่อยๆ หรือเรื่องเล่นเกม แค่มีเธอเราก็โอเคแล้ว <br>
-                เค้าสัญญาว่าจะตั้งใจรักฟ้าให้ดีขึ้นในทุกๆ วันนะ
-            </p>
-            <button onclick="triggerSurprise()" class="group relative bg-pink-500 text-white px-10 py-4 rounded-full hover:bg-pink-600 shadow-2xl transition-all transform hover:-translate-y-1 active:scale-95 overflow-hidden">
-                <span class="relative z-10 font-bold">กดเพื่อรับ Surprise ✨</span>
-            </button>
+        </section>
+    </div>
+
+    <div id="overlay" class="fixed inset-0 bg-pink-500 z-[1000] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-700">
+        <div class="text-center text-white p-10">
+            <h2 class="text-7xl md:text-9xl font-cursive mb-6">I Love You, ฟ้า</h2>
+            <p class="text-2xl font-light italic opacity-80">"ขอบคุณสำหรับ 1 ปีที่แสนวิเศษที่สุดเลยยย"</p>
+            <button onclick="location.reload()" class="mt-12 px-8 py-3 border border-white rounded-full hover:bg-white hover:text-pink-500 transition-all">Close with Love</button>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer class="py-16 text-center text-slate-400 text-sm border-t border-pink-50">
-        <p class="mb-2 uppercase tracking-[0.2em]">Pattanapong & Fah</p>
-        <p class="font-romantic text-lg text-pink-300">Forever & Always &bull; 2026</p>
-    </footer>
-
-    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
-        // Initialize Animations
-        AOS.init({
-            duration: 1000,
-            once: false,
-            mirror: true
+        AOS.init({ duration: 1200 });
+        const container = document.getElementById('main-scroll');
+        const dots = document.querySelectorAll('.dot');
+
+        // ฟังก์ชันเลื่อนหน้า
+        function scrollToSection(index) {
+            container.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' });
+        }
+
+        // อัปเดตจุดด้านข้างเวลาเลื่อน
+        container.addEventListener('scroll', () => {
+            const index = Math.round(container.scrollTop / window.innerHeight);
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
         });
 
-        // Background Hearts Generator
+        // สร้างหัวใจลอยพื้นหลัง
         function createHeart() {
-            const container = document.getElementById('hearts-container');
+            const bg = document.getElementById('bg-hearts');
             const heart = document.createElement('div');
-            heart.classList.add('heart-particle');
-            heart.innerHTML = '❤️';
-            
-            // Random properties
-            const size = Math.random() * (30 - 10) + 10;
-            const left = Math.random() * 100;
-            const duration = Math.random() * (20 - 10) + 10;
-            const delay = Math.random() * 5;
-
-            heart.style.left = `${left}%`;
-            heart.style.fontSize = `${size}px`;
-            heart.style.animationDuration = `${duration}s`;
-            heart.style.animationDelay = `${delay}s`;
-
-            container.appendChild(heart);
-
-            // Clean up
-            setTimeout(() => {
-                heart.remove();
-            }, duration * 1000 + 5000);
+            heart.className = 'heart-particle';
+            heart.innerHTML = ['❤️', '💖', '✨'][Math.floor(Math.random() * 3)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            bg.appendChild(heart);
+            setTimeout(() => heart.remove(), 10000);
         }
+        setInterval(createHeart, 600);
 
-        // Generate hearts periodically
-        setInterval(createHeart, 800);
-        // Initial batch
-        for(let i=0; i<15; i++) createHeart();
-
-        // Surprise Function
-        function triggerSurprise() {
-            // Confetti effect
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#ff85a2', '#fce7f3', '#ffb1c1']
-            });
-
-            // Message after a delay
+        // ปุ่ม Unlock
+        document.getElementById('unlock-btn').addEventListener('click', () => {
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 }, colors: ['#ffffff', '#ff4d6d'] });
             setTimeout(() => {
-                alert('เค้ารักฟ้านะคะ! ขอบคุณสำหรับ 1 ปีที่แสนวิเศษที่สุดเลยยย 💖');
+                const overlay = document.getElementById('overlay');
+                overlay.style.opacity = '1';
+                overlay.style.pointerEvents = 'all';
             }, 500);
-        }
+        });
     </script>
 </body>
 </html>
