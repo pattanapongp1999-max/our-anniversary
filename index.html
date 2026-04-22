@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our 1st Anniversary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Prompt', sans-serif; scroll-behavior: smooth; }
+        .gradient-bg { background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
 
+    <section class="min-h-screen flex flex-col items-center justify-center text-center p-6 gradient-bg">
+        <div class="animate-bounce mb-4 text-4xl">❤️</div>
+        <h1 class="text-4xl md:text-6xl font-bold text-pink-600 mb-4">Happy 1st Anniversary</h1>
+        <p class="text-lg md:text-xl text-pink-800">ขอบคุณที่เป็นเรื่องราวที่ดีที่สุดในปีนี้ของเรานะ</p>
+        <a href="#story" class="mt-8 px-6 py-3 bg-white text-pink-500 rounded-full shadow-lg hover:shadow-xl transition-all">เลื่อนดูความทรงจำของเรา</a>
+    </section>
+
+    <section id="story" class="py-20 px-6 max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-12">One Year Journey</h2>
+        <div class="space-y-12">
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="w-full md:w-1/2 h-64 bg-gray-200 rounded-2xl overflow-hidden shadow-md">
+                    <img src="path-to-your-image1.jpg" alt="First Day" class="w-full h-full object-cover">
+                </div>
+                <div class="w-full md:w-1/2">
+                    <h3 class="text-xl font-semibold text-pink-500">Day 1: จุดเริ่มต้น</h3>
+                    <p class="mt-2 text-slate-600">จำวันแรกที่เราตกลงคบกันได้ไหม? วันนั้นเป็นวันที่ใจเต้นแรงที่สุดเลย...</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row-reverse gap-8 items-center">
+                <div class="w-full md:w-1/2 h-64 bg-gray-200 rounded-2xl overflow-hidden shadow-md">
+                    <img src="path-to-your-image2.jpg" alt="Our Trip" class="w-full h-full object-cover">
+                </div>
+                <div class="w-full md:w-1/2 text-right md:text-left">
+                    <h3 class="text-xl font-semibold text-pink-500">First Trip: ทริปแรกของเรา</h3>
+                    <p class="mt-2 text-slate-600">การได้ออกไปเที่ยวด้วยกันครั้งแรก ทำให้รู้ว่าการมีเธออยู่ข้างๆ มันสนุกแค่ไหน</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-pink-50 text-center px-6">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-2xl font-bold mb-6 italic text-pink-600">"ขอบคุณที่คอยซัพพอร์ตกันเสมอมา"</h2>
+            <p class="mb-8">ไม่ว่าจะเป็นเรื่องงาน เรื่องเหนื่อยๆ หรือเรื่องเล่นเกม แค่มีเธอเราก็โอเคแล้ว</p>
+            <button onclick="alert('รักนะคะ! Happy 1 Year!')" class="bg-pink-500 text-white px-8 py-3 rounded-full hover:bg-pink-600 shadow-md">Click for a Surprise</button>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-slate-400 text-sm">
+        <p>Created with Love by Pattanapong &bull; 2026</p>
+    </footer>
+
+</body>
+</html>
