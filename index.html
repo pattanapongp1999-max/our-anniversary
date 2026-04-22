@@ -3,203 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1st Anniversary | MAX & FAH Story</title>
+    <title>Our Love Journey | 1st Anniversary</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #ff4d6d;
-            --secondary: #ffb1c1;
-        }
-        body { 
-            font-family: 'Noto Sans Thai', sans-serif; 
-            background: #fffafa;
-            overflow: hidden; /* ล็อกเพื่อให้ใช้ระบบ Snap Scroll */
-        }
-        .font-cursive { font-family: 'Great Vibes', cursive; }
-        
-        /* ระบบ Page Snap */
-        .snap-container {
-            height: 100vh;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
-        }
-        .snap-section {
-            height: 100vh;
-            scroll-snap-align: start;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Glassmorphism Effect */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 2rem;
-        }
-
-        /* Navigation Dots */
-        .nav-dots {
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-        }
-        .dot {
-            width: 12px;
-            height: 12px;
-            background: rgba(255, 77, 109, 0.3);
-            border-radius: 50%;
-            margin: 15px 0;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .dot.active {
-            background: var(--primary);
-            transform: scale(1.5);
-        }
-
-        /* Heart Particles */
-        .heart-particle {
-            position: absolute;
-            pointer-events: none;
-            z-index: 1;
-            animation: floatUp 10s linear infinite;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) scale(0); opacity: 0; }
-            50% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
+        body { font-family: 'Prompt', sans-serif; overflow: hidden; background: #fdf2f8; }
+        .font-romantic { font-family: 'Dancing Script', cursive; }
+        #game-canvas { background-color: #ffffff; border-radius: 2rem; box-shadow: 0 20px 50px rgba(251, 113, 133, 0.2); }
+        .checkpoint-modal { transform: translate(-50%, -50%) scale(0.9); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .checkpoint-modal.active { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: all; }
     </style>
 </head>
-<body>
+<body class="flex items-center justify-center min-h-screen p-4">
 
-    <nav class="nav-dots hidden md:block">
-        <div class="dot active" onclick="scrollToSection(0)"></div>
-        <div class="dot" onclick="scrollToSection(1)"></div>
-        <div class="dot" onclick="scrollToSection(2)"></div>
-        <div class="dot" onclick="scrollToSection(3)"></div>
-    </nav>
+    <div class="relative w-full max-w-4xl bg-white p-4 rounded-[2.5rem] shadow-2xl">
+        <div class="absolute top-8 left-1/2 -translate-x-1/2 z-10 text-center w-full">
+            <h1 class="text-3xl md:text-5xl font-romantic text-rose-500">Our Love Journey</h1>
+            <p class="text-slate-400 text-sm mt-1 uppercase tracking-widest">เดินไปเก็บหัวใจให้ครบเพื่อรับ Surprise นะฟ้า</p>
+        </div>
 
-    <div id="bg-hearts" class="fixed inset-0 pointer-events-none z-0"></div>
+        <canvas id="game-canvas" width="800" height="500" class="w-full h-auto"></canvas>
 
-    <div class="snap-container" id="main-scroll">
-        
-        <section class="snap-section bg-[#fff0f3]">
-            <div class="text-center z-10 p-6" data-aos="zoom-out">
-                <h1 class="text-7xl md:text-9xl font-cursive text-pink-500 mb-6 drop-shadow-sm">
-                    Happy Anniversary 1 Year
-                </h1>
-                <p class="text-2xl md:text-3xl text-pink-400 font-light mb-12">
-                    "ขอบคุณที่เกิดมาให้เค้ารักและเลือกเค้าในวันนั้นนะคั้บบะบี๋"
-                </p>
-                <button onclick="scrollToSection(1)" class="animate-bounce p-4 rounded-full bg-white shadow-lg text-pink-500 transition-transform active:scale-90">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 13l-7 7-7-7" />
-                    </svg>
-                </button>
-            </div>
-        </section>
-
-        <section class="snap-section bg-white">
-            <div class="max-w-6xl w-full mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-                <div data-aos="fade-right">
-                    <div class="glass-card p-4 rotate-3 shadow-2xl">
-                        <img src="https://images.unsplash.com/photo-1511108690759-009324a903df?auto=format&fit=crop&q=80&w=800" class="rounded-xl w-full aspect-square object-cover">
-                    </div>
-                </div>
-                <div class="space-y-6" data-aos="fade-left">
-                    <h3 class="text-5xl font-bold text-pink-500 italic">Day 1: จุดเริ่มต้น</h3>
-                    <p class="text-xl text-slate-600 leading-relaxed font-light">
-                        จำได้มั้ยยย แชทแห่งการเริ่มต้นของเราาาาาา
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="snap-section bg-[#fff5f7]">
-            <div class="max-w-6xl w-full mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-                <div class="md:order-2" data-aos="fade-left">
-                    <div class="glass-card p-4 -rotate-3 shadow-2xl">
-                        <img src="https://images.unsplash.com/photo-1494972308845-d171197eaa97?auto=format&fit=crop&q=80&w=800" class="rounded-xl w-full aspect-square object-cover">
-                    </div>
-                </div>
-                <div class="space-y-6 md:order-1 text-right" data-aos="fade-right">
-                    <h3 class="text-5xl font-bold text-pink-500 italic">The Journey</h3>
-                    <p class="text-xl text-slate-600 leading-relaxed font-light">
-                        เราผ่านอะไรด้วยกันมาเยอะมาก ทั้งเสียงหัวเราะและน้ำตา แต่นั่นแหละที่ทำให้เรารู้ว่า 'เราสำคัญต่อกันแค่ไหน'
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="snap-section bg-[#1a1a1a] text-white">
-            <div class="text-center z-10 px-6" data-aos="zoom-in">
-                <div class="mb-12 inline-block p-6 rounded-full border-2 border-pink-500/30 animate-pulse text-6xl">🔒</div>
-                <h2 class="text-4xl md:text-5xl font-bold mb-8">Our Eternal Promise</h2>
-                <button id="unlock-btn" class="group relative bg-white text-black px-12 py-5 rounded-full font-bold overflow-hidden transition-all hover:scale-105">
-                    <span class="relative z-10 uppercase tracking-widest">Unlock Our Future 🔑</span>
-                    <div class="absolute inset-0 bg-pink-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                </button>
-            </div>
-        </section>
-    </div>
-
-    <div id="overlay" class="fixed inset-0 bg-pink-500 z-[1000] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-700">
-        <div class="text-center text-white p-10">
-            <h2 class="text-7xl md:text-9xl font-cursive mb-6">I Love You, ฟ้า</h2>
-            <p class="text-2xl font-light italic opacity-80">"ขอบคุณสำหรับ 1 ปีที่แสนวิเศษที่สุดเลยยย"</p>
-            <button onclick="location.reload()" class="mt-12 px-8 py-3 border border-white rounded-full hover:bg-white hover:text-pink-500 transition-all">Close with Love</button>
+        <div class="mt-4 grid grid-cols-3 gap-2 w-32 mx-auto md:hidden">
+            <div></div>
+            <button onmousedown="move('up')" onmouseup="stop()" class="p-4 bg-rose-100 rounded-xl text-rose-500">↑</button>
+            <div></div>
+            <button onmousedown="move('left')" onmouseup="stop()" class="p-4 bg-rose-100 rounded-xl text-rose-500">←</button>
+            <button onmousedown="move('down')" onmouseup="stop()" class="p-4 bg-rose-100 rounded-xl text-rose-500">↓</button>
+            <button onmousedown="move('right')" onmouseup="stop()" class="p-4 bg-rose-100 rounded-xl text-rose-500">→</button>
         </div>
     </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <div id="modal" class="checkpoint-modal fixed top-1/2 left-1/2 opacity-0 pointer-events-none z-50 w-[90%] max-w-md bg-white p-6 rounded-3xl shadow-2xl text-center">
+        <div id="modal-img" class="w-full h-48 bg-rose-100 rounded-2xl mb-4 overflow-hidden">
+            <img src="" class="w-full h-full object-cover">
+        </div>
+        <h3 id="modal-title" class="text-2xl font-bold text-rose-500 mb-2"></h3>
+        <p id="modal-text" class="text-slate-600 mb-6"></p>
+        <button onclick="closeModal()" class="w-full py-3 bg-rose-500 text-white rounded-full font-bold shadow-lg">เดินทางต่อ ❤️</button>
+    </div>
+
+    <div id="final-overlay" class="fixed inset-0 bg-rose-500 z-[100] flex items-center justify-center flex-col text-white opacity-0 pointer-events-none transition-opacity duration-1000">
+        <h2 class="text-7xl font-romantic mb-4">Happy 1st Anniversary</h2>
+        <p class="text-2xl mb-8">ขอบคุณที่เป็น Partner ที่ดีที่สุดของเค้านะคะ</p>
+        <button onclick="location.reload()" class="px-10 py-3 border-2 border-white rounded-full">เริ่มเดินทางใหม่อีกครั้ง</button>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
-        AOS.init({ duration: 1200 });
-        const container = document.getElementById('main-scroll');
-        const dots = document.querySelectorAll('.dot');
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        const modal = document.getElementById('modal');
 
-        // ฟังก์ชันเลื่อนหน้า
-        function scrollToSection(index) {
-            container.scrollTo({ top: window.innerHeight * index, behavior: 'smooth' });
-        }
+        // Game State
+        let player = { x: 50, y: 400, size: 30, speed: 5, dx: 0, dy: 0 };
+        let checkpoints = [
+            { x: 150, y: 350, title: "จุดเริ่มต้นของเรา", text: "วันแรกที่เราเริ่มคุยกัน จำได้ไหมว่าเค้าเขินแค่ไหน", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7", visited: false },
+            { x: 400, y: 200, title: "ทริปแรกที่แสนพิเศษ", text: "การไปเที่ยวด้วยกันครั้งแรก ทำให้เค้ารู้ว่าชีวิตที่มีฟ้ามันดีกว่าเยอะเลย", img: "https://images.unsplash.com/photo-1522673607200-1648832cee98", visited: false },
+            { x: 650, y: 100, title: "1 ปีที่มีความสุข", text: "ขอบคุณที่อดทนและเติบโตไปด้วยกันนะ รักฟ้าที่สุดเลย", img: "https://images.unsplash.com/photo-1494972308845-d171197eaa97", visited: false }
+        ];
 
-        // อัปเดตจุดด้านข้างเวลาเลื่อน
-        container.addEventListener('scroll', () => {
-            const index = Math.round(container.scrollTop / window.innerHeight);
-            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        // Controls Logic
+        window.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowUp') player.dy = -player.speed;
+            if(e.key === 'ArrowDown') player.dy = player.speed;
+            if(e.key === 'ArrowLeft') player.dx = -player.speed;
+            if(e.key === 'ArrowRight') player.dx = player.speed;
         });
 
-        // สร้างหัวใจลอยพื้นหลัง
-        function createHeart() {
-            const bg = document.getElementById('bg-hearts');
-            const heart = document.createElement('div');
-            heart.className = 'heart-particle';
-            heart.innerHTML = ['❤️', '💖', '✨'][Math.floor(Math.random() * 3)];
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            bg.appendChild(heart);
-            setTimeout(() => heart.remove(), 10000);
-        }
-        setInterval(createHeart, 600);
+        window.addEventListener('keyup', () => { player.dx = 0; player.dy = 0; });
 
-        // ปุ่ม Unlock
-        document.getElementById('unlock-btn').addEventListener('click', () => {
-            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 }, colors: ['#ffffff', '#ff4d6d'] });
+        function move(dir) {
+            if(dir === 'up') player.dy = -player.speed;
+            if(dir === 'down') player.dy = player.speed;
+            if(dir === 'left') player.dx = -player.speed;
+            if(dir === 'right') player.dx = player.speed;
+        }
+        function stop() { player.dx = 0; player.dy = 0; }
+
+        function update() {
+            player.x += player.dx;
+            player.y += player.dy;
+
+            // Boundaries
+            if(player.x < 0) player.x = 0;
+            if(player.x + player.size > canvas.width) player.x = canvas.width - player.size;
+            if(player.y < 0) player.y = 0;
+            if(player.y + player.size > canvas.height) player.y = canvas.height - player.size;
+
+            // Check Collision
+            checkpoints.forEach((cp, index) => {
+                let dist = Math.hypot(player.x - cp.x, player.y - cp.y);
+                if(dist < 40 && !cp.visited) {
+                    cp.visited = true;
+                    showModal(cp);
+                    player.dx = 0; player.dy = 0;
+                }
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Path (Dotted Line)
+            ctx.beginPath();
+            ctx.setLineDash([10, 10]);
+            ctx.moveTo(50, 400);
+            checkpoints.forEach(cp => ctx.lineTo(cp.x, cp.y));
+            ctx.strokeStyle = '#fecdd3';
+            ctx.stroke();
+
+            // Draw Checkpoints
+            checkpoints.forEach(cp => {
+                ctx.font = '30px serif';
+                ctx.fillText(cp.visited ? '💖' : '🤍', cp.x - 15, cp.y + 10);
+            });
+
+            // Draw Player (Character)
+            ctx.font = '40px serif';
+            ctx.fillText('👦', player.x, player.y + 30);
+            // ถ้าอยากให้มีตัวละครฟ้าเดินคู่กัน
+            ctx.fillText('👧', player.x - 20, player.y + 15);
+        }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        function showModal(cp) {
+            document.getElementById('modal-title').innerText = cp.title;
+            document.getElementById('modal-text').innerText = cp.text;
+            document.getElementById('modal-img').querySelector('img').src = cp.img;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            if(checkpoints.every(cp => cp.visited)) {
+                triggerFinal();
+            }
+        }
+
+        function triggerFinal() {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
             setTimeout(() => {
-                const overlay = document.getElementById('overlay');
-                overlay.style.opacity = '1';
-                overlay.style.pointerEvents = 'all';
-            }, 500);
-        });
+                const final = document.getElementById('final-overlay');
+                final.classList.remove('opacity-0', 'pointer-events-none');
+                final.classList.add('opacity-100');
+            }, 1000);
+        }
+
+        loop();
     </script>
 </body>
 </html>
