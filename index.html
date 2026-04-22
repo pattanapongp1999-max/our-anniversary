@@ -18,12 +18,12 @@
         .font-romantic { font-family: 'Great Vibes', cursive; }
         
         #game-canvas { 
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.9);
             border: 4px solid #fff;
-            border-radius: 2.5rem; 
+            border-radius: 2rem; 
             width: 100%; 
             height: auto; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
         }
 
         .checkpoint-modal { 
@@ -40,67 +40,66 @@
             box-shadow: 0 4px 0 #fecdd3;
         }
         .d-pad button:active {
-            transform: translateY(4px);
-            box-shadow: 0 0 0 #fecdd3;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #fecdd3;
             background-color: #fff1f2;
         }
 
-        .guide-banner {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(5px);
-        }
-
-        .w-full {
-            width: 80%;
-        }
+        /* ปรับแต่ง Scrollbar เผื่อกรณีจอสั้นมาก */
+        ::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="flex flex-col items-center justify-start min-h-screen p-4">
+<body class="flex flex-col items-center min-h-screen p-2 pt-4">
 
-    <!-- Header & Progress -->
-    <div class="w-full max-w-md text-center mb-4 mt-2">
-        <h1 class="text-4xl font-romantic text-rose-500 mb-1">Our Journey</h1>
-        <div id="guide-text" class="guide-banner inline-block px-6 py-2 rounded-full text-rose-400 text-sm font-semibold shadow-sm border border-rose-100" style="white-space: nowrap;">
-            เริ่มต้นการเดินทาง: ไปที่หัวใจดวงที่ 1 กัน!
+    <!-- Header & Progress (Compact Version) -->
+    <div class="w-full max-w-md text-center mb-3">
+        <h1 class="text-3xl font-romantic text-rose-500 leading-tight">Our Journey</h1>
+        <p id="guide-text" class="text-rose-400 text-xs font-semibold bg-white/80 py-1 px-4 rounded-full inline-block border border-rose-100 shadow-sm mt-1">
+            เริ่มต้น: ไปที่หัวใจดวงที่ 1 กัน!
+        </p>
+    </div>
+
+    <!-- Game Area (Reduced Height) -->
+    <div class="relative w-full max-w-sm bg-white/40 p-2 rounded-[2.5rem] border border-white shadow-sm">
+        <canvas id="game-canvas" width="400" height="420"></canvas>
+    </div>
+
+    <!-- Mobile Controls (Higher Position) -->
+    <div class="flex-grow flex items-center justify-center w-full">
+        <div class="grid grid-cols-3 gap-2 d-pad">
+            <div></div>
+            <button id="btn-up" class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-rose-500 font-bold text-xl shadow-sm">↑</button>
+            <div></div>
+            <button id="btn-left" class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-rose-500 font-bold text-xl shadow-sm">←</button>
+            <button id="btn-down" class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-rose-500 font-bold text-xl shadow-sm">↓</button>
+            <button id="btn-right" class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-rose-500 font-bold text-xl shadow-sm">→</button>
         </div>
     </div>
-
-    <!-- Game Area -->
-    <div class="relative w-full max-w-md bg-white/50 p-3 rounded-[3rem] shadow-inner border border-white">
-        <canvas id="game-canvas" width="400" height="550"></canvas>
-    </div>
-
-    <!-- Mobile Controls -->
-    <div class="mt-8 grid grid-cols-3 gap-3 d-pad">
-        <div></div>
-        <button id="btn-up" class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-rose-500 font-bold text-xl">↑</button>
-        <div></div>
-        <button id="btn-left" class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-rose-500 font-bold text-xl">←</button>
-        <button id="btn-down" class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-rose-500 font-bold text-xl">↓</button>
-        <button id="btn-right" class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-rose-500 font-bold text-xl">→</button>
-    </div>
+    
+    <!-- Footer Spacer for Mobile Nav Bar -->
+    <div class="h-6 w-full"></div>
 
     <!-- Story Modal -->
-    <div id="modal" class="checkpoint-modal fixed top-1/2 left-1/2 z-[200] w-[88%] max-w-xs bg-white p-6 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.15)] text-center border-4 border-rose-50">
-        <div class="w-full h-44 bg-rose-50 rounded-[1.5rem] mb-4 overflow-hidden border-2 border-rose-100">
+    <div id="modal" class="checkpoint-modal fixed top-1/2 left-1/2 z-[200] w-[85%] max-w-xs bg-white p-5 rounded-[2rem] shadow-[0_15px_50px_rgba(0,0,0,0.2)] text-center border-4 border-rose-50">
+        <div class="w-full h-40 bg-rose-50 rounded-[1.5rem] mb-3 overflow-hidden border-2 border-rose-100">
             <img id="modal-img" src="" class="w-full h-full object-cover">
         </div>
-        <h3 id="modal-title" class="text-xl font-bold text-slate-800 mb-1"></h3>
-        <p id="modal-text" class="text-sm text-slate-500 leading-relaxed mb-6 px-2"></p>
-        <button onclick="closeModal()" class="w-full py-4 bg-rose-500 text-white rounded-2xl font-bold shadow-lg shadow-rose-200">
+        <h3 id="modal-title" class="text-lg font-bold text-slate-800 mb-1"></h3>
+        <p id="modal-text" class="text-xs text-slate-500 leading-relaxed mb-4 px-1"></p>
+        <button onclick="closeModal()" class="w-full py-3 bg-rose-500 text-white rounded-xl font-bold shadow-md active:scale-95 transition-transform">
             บันทึกความทรงจำ ❤️
         </button>
     </div>
 
     <!-- End Game Overlay -->
-    <div id="final-overlay" class="fixed inset-0 bg-white/95 z-[300] flex items-center justify-center flex-col text-slate-800 opacity-0 pointer-events-none transition-all duration-1000 p-8 text-center">
-        <div class="mb-6 text-6xl">✨💖✨</div>
-        <h2 class="text-6xl font-romantic text-rose-500 mb-4">Forever & Always</h2>
-        <p class="text-lg text-slate-500 mb-10 leading-relaxed font-light">
+    <div id="final-overlay" class="fixed inset-0 bg-white/98 z-[300] flex items-center justify-center flex-col text-slate-800 opacity-0 pointer-events-none transition-all duration-1000 p-6 text-center">
+        <div class="mb-4 text-5xl">✨💖✨</div>
+        <h2 class="text-5xl font-romantic text-rose-500 mb-3">Forever & Always</h2>
+        <p class="text-sm text-slate-500 mb-8 leading-relaxed font-light">
             ขอบคุณที่เดินเคียงข้างกันมาตลอด 1 ปีนะ "ฟ้า"<br>
             ที่ตรงนี้จะเป็นของฟ้าเสมอและตลอดไป
         </p>
-        <button onclick="location.reload()" class="px-10 py-4 bg-rose-500 text-white rounded-full font-semibold shadow-xl shadow-rose-200">
+        <button onclick="location.reload()" class="px-8 py-3 bg-rose-500 text-white rounded-full font-semibold shadow-lg">
             เริ่มต้นการเดินทางอีกครั้ง
         </button>
     </div>
@@ -111,28 +110,25 @@
         const ctx = canvas.getContext('2d');
         const guideText = document.getElementById('guide-text');
         
-        // --- CONFIG: ตัวละคร (ใส่รูปของคุณที่นี่) ---
         const playerImg = new Image();
         playerImg.src = 'https://cdn-icons-png.flaticon.com/512/4392/4392471.png'; // เปลี่ยนเป็นรูปของคุณ
 
-        let currentStep = 0; // ลำดับขั้นปัจจุบัน
-        let player = { x: 175, y: 480, size: 50, speed: 4.5, dx: 0, dy: 0 };
+        let currentStep = 0;
+        let player = { x: 175, y: 350, size: 50, speed: 4.5, dx: 0, dy: 0 };
         
-        // จุดตำแหน่งต่างๆ
         let checkpoints = [
-            { x: 80, y: 380, title: "1. จุดเริ่มต้นของเรา", text: "วันแรกที่เราเริ่มคุยกัน จำได้ไหมว่าเค้าเขินแค่ไหน วันนั้นคือจุดเปลี่ยนชีวิตเค้าเลยนะ", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7", visited: false },
-            { x: 300, y: 250, title: "2. ความทรงจำแสนพิเศษ", text: "ทริปที่เราไปด้วยกัน มันทำให้เค้ารู้ว่าฟ้าคือคนที่เค้าอยากพาไปทุกที่ทั่วโลกเลย", img: "https://images.unsplash.com/photo-1522673607200-1648832cee98", visited: false },
-            { x: 100, y: 120, title: "3. ครบรอบ 1 ปี", text: "ขอบคุณที่เป็นแฟนที่น่ารักที่สุด เค้าสัญญาว่าจะตั้งใจรักฟ้าให้ดีขึ้นในทุกๆ วันนะ", img: "https://images.unsplash.com/photo-1494972308845-d171197eaa97", visited: false }
+            { x: 80, y: 280, title: "1. จุดเริ่มต้นของเรา", text: "วันแรกที่เราเริ่มคุยกัน จำได้ไหมว่าเค้าเขินแค่ไหน วันนั้นคือจุดเปลี่ยนชีวิตเค้าเลยนะ", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7", visited: false },
+            { x: 300, y: 180, title: "2. ความทรงจำแสนพิเศษ", text: "ทริปที่เราไปด้วยกัน มันทำให้เค้ารู้ว่าฟ้าคือคนที่เค้าอยากพาไปทุกที่ทั่วโลกเลย", img: "https://images.unsplash.com/photo-1522673607200-1648832cee98", visited: false },
+            { x: 100, y: 80, title: "3. ครบรอบ 1 ปี", text: "ขอบคุณที่เป็นแฟนที่น่ารักที่สุด เค้าสัญญาว่าจะตั้งใจรักฟ้าให้ดีขึ้นในทุกๆ วันนะ", img: "https://images.unsplash.com/photo-1494972308845-d171197eaa97", visited: false }
         ];
 
-        // Controls
         const setDir = (x, y) => { player.dx = x * player.speed; player.dy = y * player.speed; };
         const stopDir = () => { player.dx = 0; player.dy = 0; };
 
         const bindBtn = (id, x, y) => {
             const btn = document.getElementById(id);
             btn.addEventListener('touchstart', (e) => { e.preventDefault(); setDir(x, y); });
-            btn.addEventListener('touchend', stopDir);
+            btn.addEventListener('touchend', (e) => { e.preventDefault(); stopDir(); });
             btn.addEventListener('mousedown', () => setDir(x, y));
             btn.addEventListener('mouseup', stopDir);
         };
@@ -145,12 +141,9 @@
         function update() {
             player.x += player.dx;
             player.y += player.dy;
-
-            // Boundaries
             player.x = Math.max(0, Math.min(canvas.width - player.size, player.x));
             player.y = Math.max(0, Math.min(canvas.height - player.size, player.y));
 
-            // ตรวจสอบการเก็บหัวใจ (ต้องเก็บตามลำดับ currentStep)
             let target = checkpoints[currentStep];
             if(target) {
                 let dist = Math.hypot(player.x + player.size/2 - target.x, player.y + player.size/2 - target.y);
@@ -165,13 +158,12 @@
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw Paths (Background)
+            // Draw Paths
             ctx.setLineDash([8, 8]);
             ctx.beginPath();
-            ctx.moveTo(200, 500);
+            ctx.moveTo(200, 380);
             checkpoints.forEach((cp, idx) => {
                 ctx.lineTo(cp.x, cp.y);
-                // เปลี่ยนสีเส้นตามว่าเดินผ่านหรือยัง
                 ctx.strokeStyle = idx <= currentStep ? '#fda4af' : '#e2e8f0';
                 ctx.lineWidth = 3;
                 ctx.stroke();
@@ -181,37 +173,30 @@
 
             // Draw Hearts
             checkpoints.forEach((cp, idx) => {
-                ctx.font = '28px serif';
+                ctx.font = '24px serif';
                 ctx.textAlign = 'center';
-                
-                if (cp.visited) {
-                    ctx.fillText('💖', cp.x, cp.y + 10);
-                } else if (idx === currentStep) {
-                    // ดวงที่ต้องไปเก็บ (มีวงกลมล้อมรอบ)
+                if (cp.visited) ctx.fillText('💖', cp.x, cp.y + 10);
+                else if (idx === currentStep) {
                     ctx.beginPath();
-                    ctx.arc(cp.x, cp.y, 25, 0, Math.PI*2);
+                    ctx.arc(cp.x, cp.y, 22, 0, Math.PI*2);
                     ctx.fillStyle = 'rgba(251, 113, 133, 0.1)';
                     ctx.fill();
                     ctx.fillText('🤍', cp.x, cp.y + 10);
                 } else {
-                    // ดวงที่ยังไม่ถึงคิว
-                    ctx.globalAlpha = 0.3;
+                    ctx.globalAlpha = 0.2;
                     ctx.fillText('🔒', cp.x, cp.y + 10);
                     ctx.globalAlpha = 1.0;
                 }
-                
-                // เลขกำกับดวง
-                ctx.font = '600 12px Prompt';
+                ctx.font = '600 10px Prompt';
                 ctx.fillStyle = '#94a3b8';
-                ctx.fillText(`Step ${idx + 1}`, cp.x, cp.y + 30);
+                ctx.fillText(`Step ${idx + 1}`, cp.x, cp.y + 28);
             });
 
-            // Draw Player
-            // White Border for sticker effect
+            // Draw Player (Sticker Effect)
             ctx.beginPath();
             ctx.arc(player.x + player.size/2, player.y + player.size/2, player.size/2 + 3, 0, Math.PI*2);
             ctx.fillStyle = '#fff';
-            ctx.shadowBlur = 10;
+            ctx.shadowBlur = 8;
             ctx.shadowColor = 'rgba(0,0,0,0.1)';
             ctx.fill();
             ctx.shadowBlur = 0;
@@ -240,11 +225,10 @@
         function closeModal() {
             document.getElementById('modal').classList.remove('active');
             currentStep++;
-            
             if(currentStep < checkpoints.length) {
-                guideText.innerText = `ด่านต่อไป: ไปหาหัวใจดวงที่ ${currentStep + 1} กัน!`;
+                guideText.innerText = `ด่านต่อไป: ดวงที่ ${currentStep + 1} กันต่อ!`;
             } else {
-                guideText.innerText = `สำเร็จแล้ว! เดินทางไปที่เส้นชัยกัน`;
+                guideText.innerText = `สำเร็จแล้ว!`;
                 triggerFinal();
             }
         }
@@ -253,7 +237,7 @@
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#f43f5e', '#fb7185', '#ffffff'] });
             setTimeout(() => {
                 document.getElementById('final-overlay').classList.add('opacity-100', 'pointer-events-all');
-            }, 1500);
+            }, 1000);
         }
 
         loop();
