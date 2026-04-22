@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>My Sweet Heart | For Fah</title>
+    <title>Anniversary 1st of Max & Fah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -16,134 +16,154 @@
             font-family: 'Mali', cursive; 
             background-color: #fff0f3;
             background-image: 
-                linear-gradient(45deg, #ffe5ec 25%, transparent 25%), 
-                linear-gradient(-45deg, #ffe5ec 25%, transparent 25%), 
-                linear-gradient(45deg, transparent 75%, #ffe5ec 75%), 
-                linear-gradient(-45deg, transparent 75%, #ffe5ec 75%);
-            background-size: 40px 40px;
-            background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+                radial-gradient(#ffc2d1 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
             overflow: hidden;
             touch-action: none;
         }
 
         .game-frame {
             background: white;
-            border: 8px solid white;
-            border-radius: 3rem;
-            box-shadow: 0 20px 50px rgba(251, 111, 146, 0.3);
+            border: 6px solid #fff;
+            border-radius: 3.5rem;
+            box-shadow: 
+                0 15px 40px rgba(251, 111, 146, 0.25),
+                inset 0 0 20px rgba(255, 143, 163, 0.05);
             position: relative;
         }
 
         canvas {
             display: block;
-            border-radius: 2.5rem;
-            background: #fffafa;
+            border-radius: 3rem;
+            background: linear-gradient(to bottom, #ffffff, #fffafa);
         }
 
+        /* ปุ่มควบคุมแบบ SVG */
         .control-btn {
             background: white;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
+            border-radius: 1.2rem;
+            width: 65px;
+            height: 65px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 6px 0 #ffb3c1;
-            transition: all 0.1s ease;
+            transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            padding: 12px;
+        }
+        .control-btn svg {
+            width: 100%;
+            height: 100%;
+            fill: #fb6f92;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
         }
         .control-btn:active {
             transform: translateY(4px);
             box-shadow: 0 2px 0 #ffb3c1;
+            background-color: #fff9fa;
         }
 
         .modal-overlay {
-            background: rgba(255, 143, 163, 0.4);
-            backdrop-filter: blur(8px);
+            background: rgba(45, 15, 25, 0.2);
+            backdrop-filter: blur(12px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
+            padding: 20px;
         }
         .modal-overlay.active { display: flex; }
 
         .popup {
             background: white;
             border-radius: 2.5rem;
-            width: 85%;
-            max-width: 320px;
-            padding: 1.5rem;
+            width: 100%;
+            max-width: 340px;
+            padding: 1.2rem;
             text-align: center;
-            border: 4px solid #ffc2d1;
-            transform: scale(0.8);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 4px solid #fff;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .modal-overlay.active .popup { transform: scale(1); }
+        .modal-overlay.active .popup { 
+            transform: translateY(0); 
+            opacity: 1;
+        }
 
         .puffy-button {
-            background: linear-gradient(180deg, #ffb3c1, #fb6f92);
+            background: linear-gradient(135deg, #ff8fa3, #fb6f92);
             color: white;
             border-radius: 1.5rem;
-            padding: 1rem;
+            padding: 1.1rem;
             width: 100%;
-            font-weight: bold;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(251, 111, 146, 0.4);
-            transition: transform 0.2s;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 8px 20px rgba(251, 111, 146, 0.3);
+            border: 2px solid rgba(255,255,255,0.2);
         }
-        .puffy-button:active { transform: scale(0.95); }
 
-        @keyframes bounce-soft {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+        .glow-heart {
+            filter: drop-shadow(0 0 8px rgba(251, 111, 146, 0.6));
         }
-        .animate-soft { animation: bounce-soft 2s infinite ease-in-out; }
     </style>
 </head>
-<body class="flex flex-col items-center justify-between min-h-screen p-4 py-8">
+<body class="flex flex-col items-center justify-between min-h-screen p-4 py-6">
 
-    <!-- Top Info -->
-    <div class="text-center animate-soft">
-        <h1 class="text-3xl font-bold text-[#fb6f92]">Fah's Journey 🎀</h1>
-        <div id="status" class="bg-white/80 px-4 py-1 rounded-full text-sm text-[#ff8fa3] font-bold border border-white mt-2 shadow-sm">
-            ด่านที่ 1: จุดเริ่มต้น
+    <!-- ส่วนหัว -->
+    <div class="text-center">
+        <h1 class="text-3xl font-bold text-[#fb6f92] drop-shadow-sm">Our Adventure 🎀</h1>
+        <div id="status" class="bg-white/90 px-5 py-1.5 rounded-full text-xs text-[#ff8fa3] font-bold border border-rose-100 mt-2 shadow-sm inline-block">
+            Step 1: จุดเริ่มต้น
         </div>
     </div>
 
-    <!-- Game Screen -->
-    <div class="game-frame w-full max-w-[340px]">
+    <!-- หน้าจอเกม -->
+    <div class="game-frame w-full max-w-[340px] border-8">
         <canvas id="gameCanvas" width="340" height="380"></canvas>
     </div>
 
-    <!-- Controls -->
-    <div class="grid grid-cols-3 gap-4 mb-4">
+    <!-- ปุ่มควบคุม (ใช้ SVG แทนลูกศร) -->
+    <div class="grid grid-cols-3 gap-3 mb-2">
         <div></div>
-        <div id="up" class="control-btn text-[#fb6f92] text-2xl">▲</div>
+        <div id="up" class="control-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+        </div>
         <div></div>
-        <div id="left" class="control-btn text-[#fb6f92] text-2xl">◀</div>
-        <div id="down" class="control-btn text-[#fb6f92] text-2xl">▼</div>
-        <div id="right" class="control-btn text-[#fb6f92] text-2xl">▶</div>
-    </div>
-
-    <!-- Modal System -->
-    <div id="modalOverlay" class="modal-overlay fixed inset-0">
-        <div class="popup shadow-2xl">
-            <div class="w-full aspect-video bg-[#fff0f3] rounded-2xl mb-4 overflow-hidden border-2 border-[#ffe5ec]">
-                <img id="modalImg" src="" class="w-full h-full object-cover">
-            </div>
-            <h2 id="modalTitle" class="text-xl font-bold text-[#fb6f92] mb-2"></h2>
-            <p id="modalDesc" class="text-slate-500 text-sm mb-6 leading-relaxed"></p>
-            <button id="closeBtn" class="puffy-button">รักจัง เดินต่อเลย ❤️</button>
+        <div id="left" class="control-btn">
+            <svg viewBox="0 0 24 24"><path d="M4 12l8 8v-5h8v-6h-8v-5z"/></svg>
+        </div>
+        <div id="down" class="control-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 20l8-8h-5v-8h-6v8h-5z"/></svg>
+        </div>
+        <div id="right" class="control-btn">
+            <svg viewBox="0 0 24 24"><path d="M20 12l-8-8v5h-8v-6h8v-5z"/></svg>
         </div>
     </div>
 
-    <!-- Final Scene -->
+    <!-- ระบบ Modal -->
+    <div id="modalOverlay" class="modal-overlay fixed inset-0">
+        <div class="popup">
+            <div class="w-full aspect-[4/3] bg-[#fff0f3] rounded-3xl mb-5 overflow-hidden border-2 border-[#ffe5ec] relative shadow-inner">
+                <img id="modalImg" src="" class="w-full h-full object-cover">
+            </div>
+            <h2 id="modalTitle" class="text-xl font-bold text-[#fb6f92] mb-2"></h2>
+            <p id="modalDesc" class="text-slate-500 text-sm mb-6 leading-relaxed px-2"></p>
+            <button id="closeBtn" class="puffy-button active:scale-95 transition-transform">
+                รักจัง เดินต่อเลย ❤️
+            </button>
+        </div>
+    </div>
+
+    <!-- ฉากจบ -->
     <div id="finalScene" class="fixed inset-0 bg-[#fb6f92] hidden flex-col items-center justify-center p-10 text-center z-[2000]">
-        <div class="text-8xl mb-6">🍭</div>
-        <h2 class="text-4xl font-bold text-white mb-4">Happy Anniversary!</h2>
-        <p class="text-white/90 mb-10 italic">ขอบคุณที่เป็นความสุขให้กันมาตลอด 1 ปีนะจ๊ะคนดี</p>
-        <button onclick="location.reload()" class="bg-white text-[#fb6f92] px-10 py-4 rounded-full font-bold shadow-xl">เล่นอีกรอบ ☁️</button>
+        <div class="text-8xl mb-6 animate-bounce">💝</div>
+        <h2 class="text-4xl font-bold text-white mb-4">Happy 1st Year!</h2>
+        <p class="text-white/90 mb-10 italic font-light">"ขอบคุณที่เดินมาถึงตรงนี้ และขอบคุณที่อยู่ด้วยกันมาตลอดนะฟ้า"</p>
+        <button onclick="location.reload()" class="bg-white text-[#fb6f92] px-10 py-4 rounded-full font-bold shadow-2xl">Restart the Love ☁️</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -153,31 +173,41 @@
         const overlay = document.getElementById('modalOverlay');
         const statusText = document.getElementById('status');
 
-        // Character - สามารถเปลี่ยนรูปได้ที่นี่
         const charImg = new Image();
         charImg.src = 'https://cdn-icons-png.flaticon.com/512/4392/4392471.png';
 
         let gameState = {
             step: 0,
             isModalOpen: false,
-            player: { x: 145, y: 300, size: 50, speed: 5, dx: 0, dy: 0 }
+            player: { x: 145, y: 300, size: 50, speed: 5.5, dx: 0, dy: 0 }
         };
 
         const checkpoints = [
-            { x: 70, y: 250, t: "จุดเริ่มต้น 💌", d: "จำวันแรกที่ทักไปหาฟ้าได้ไหม ตอนนั้นมือสั่นมากนะ แต่ดีใจที่วันนั้นกล้าทักไป", i: "https://images.unsplash.com/photo-1518199266791-5375a83190b7", v: false },
-            { x: 270, y: 170, t: "ความประทับใจ 🌸", d: "ทุกครั้งที่อยู่กับฟ้า เค้าเป็นตัวเองได้เต็มที่ ขอบคุณที่ซัพพอร์ตเค้าทุกอย่างนะ", i: "https://images.unsplash.com/photo-1522673607200-1648832cee98", v: false },
-            { x: 100, y: 70, t: "ครบรอบ 1 ปี 🎂", d: "สัญญาว่าจะดูแลฟ้าให้ดีแบบนี้ไปเรื่อยๆ อยู่ฉลองด้วยกันไปทุกปีเลยนะ", i: "https://images.unsplash.com/photo-1494972308845-d171197eaa97", v: false }
+            { x: 70, y: 240, t: "จุดเริ่มต้น 💌", d: "วันแรกที่คุยกัน ใครจะคิดว่าเราจะมาไกลขนาดนี้ ขอบคุณที่เปิดใจให้เค้านะ", i: "https://images.unsplash.com/photo-1518199266791-5375a83190b7", v: false },
+            { x: 270, y: 160, t: "คนพิเศษ 🌸", d: "ฟ้าเป็นคนที่น่ารักที่สุดในโลกสำหรับเค้า ไม่ว่าวันไหนฟ้าก็ทำให้เค้ายิ้มได้เสมอ", i: "https://images.unsplash.com/photo-1522673607200-1648832cee98", v: false },
+            { x: 100, y: 70, t: "ความรัก 1 ปี 🎂", d: "หนึ่งปีที่ผ่านมามันมหัศจรรย์มาก เค้าสัญญาว่าจะรักและดูแลฟ้าให้ดีที่สุดเลยนะ", i: "https://images.unsplash.com/photo-1494972308845-d171197eaa97", v: false }
         ];
 
-        // Input Handling
+        // ระบบควบคุม
         const setupBtn = (id, dx, dy) => {
             const btn = document.getElementById(id);
-            const start = (e) => { e.preventDefault(); if(!gameState.isModalOpen) { gameState.player.dx = dx; gameState.player.dy = dy; } };
-            const stop = (e) => { e.preventDefault(); gameState.player.dx = 0; gameState.player.dy = 0; };
+            const start = (e) => { 
+                e.preventDefault(); 
+                if(!gameState.isModalOpen) { 
+                    gameState.player.dx = dx; 
+                    gameState.player.dy = dy; 
+                } 
+            };
+            const stop = (e) => { 
+                e.preventDefault(); 
+                gameState.player.dx = 0; 
+                gameState.player.dy = 0; 
+            };
             btn.addEventListener('touchstart', start);
             btn.addEventListener('touchend', stop);
             btn.addEventListener('mousedown', start);
             btn.addEventListener('mouseup', stop);
+            btn.addEventListener('mouseleave', stop);
         };
 
         setupBtn('up', 0, -gameState.player.speed);
@@ -188,10 +218,10 @@
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Path Line
-            ctx.setLineDash([5, 5]);
-            ctx.strokeStyle = '#ffc2d1';
-            ctx.lineWidth = 3;
+            // วาดเส้นทาง
+            ctx.setLineDash([8, 8]);
+            ctx.strokeStyle = '#ffe5ec';
+            ctx.lineWidth = 4;
             ctx.beginPath();
             ctx.moveTo(170, 350);
             checkpoints.forEach((cp, i) => {
@@ -202,26 +232,30 @@
                 ctx.moveTo(cp.x, cp.y);
             });
 
-            // Hearts
+            // วาดหัวใจ
             checkpoints.forEach((cp, i) => {
-                ctx.font = '30px serif';
+                ctx.font = '32px serif';
                 ctx.textAlign = 'center';
                 if(cp.v) {
-                    ctx.fillText('💖', cp.x, cp.y + 10);
+                    ctx.fillText('💖', cp.x, cp.y + 12);
                 } else if(i === gameState.step) {
-                    ctx.fillText('🤍', cp.x, cp.y + 10);
+                    ctx.save();
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#fb6f92';
+                    ctx.fillText('🤍', cp.x, cp.y + 12);
+                    ctx.restore();
                 } else {
                     ctx.globalAlpha = 0.2;
-                    ctx.fillText('🔒', cp.x, cp.y + 10);
+                    ctx.fillText('🔒', cp.x, cp.y + 12);
                     ctx.globalAlpha = 1.0;
                 }
             });
 
-            // Player Sticker
+            // วาดตัวละคร
             const p = gameState.player;
             ctx.save();
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = 'rgba(251, 111, 146, 0.3)';
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = 'rgba(251, 111, 146, 0.4)';
             ctx.beginPath();
             ctx.arc(p.x + p.size/2, p.y + p.size/2, p.size/2 + 4, 0, Math.PI*2);
             ctx.fillStyle = 'white';
@@ -241,15 +275,13 @@
             p.x += p.dx;
             p.y += p.dy;
 
-            // Bounds
-            p.x = Math.max(0, Math.min(canvas.width - p.size, p.x));
-            p.y = Math.max(0, Math.min(canvas.height - p.size, p.y));
+            p.x = Math.max(10, Math.min(canvas.width - p.size - 10, p.x));
+            p.y = Math.max(10, Math.min(canvas.height - p.size - 10, p.y));
 
-            // Collision
             const target = checkpoints[gameState.step];
             if(target) {
                 const dist = Math.hypot(p.x + p.size/2 - target.x, p.y + p.size/2 - target.y);
-                if(dist < 30) {
+                if(dist < 32) {
                     target.v = true;
                     openModal(target);
                 }
@@ -266,20 +298,23 @@
             overlay.classList.add('active');
         }
 
-        document.getElementById('closeBtn').addEventListener('click', () => {
+        document.getElementById('closeBtn').onclick = function() {
             overlay.classList.remove('active');
-            gameState.isModalOpen = false;
-            gameState.step++;
-            
-            if(gameState.step >= checkpoints.length) {
-                confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
-                setTimeout(() => {
-                    document.getElementById('finalScene').style.display = 'flex';
-                }, 1000);
-            } else {
-                statusText.innerText = `ด่านที่ ${gameState.step + 1}: ${checkpoints[gameState.step].t}`;
-            }
-        });
+            // หน่วงเวลาเล็กน้อยเพื่อให้ Animation การปิดดูนุ่มนวล
+            setTimeout(() => {
+                gameState.isModalOpen = false;
+                gameState.step++;
+                
+                if(gameState.step >= checkpoints.length) {
+                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                    setTimeout(() => {
+                        document.getElementById('finalScene').style.display = 'flex';
+                    }, 800);
+                } else {
+                    statusText.innerText = `Step ${gameState.step + 1}: ${checkpoints[gameState.step].t}`;
+                }
+            }, 100);
+        };
 
         function gameLoop() {
             update();
