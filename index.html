@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -12,10 +13,11 @@
             --secondary: #ffb3c1;
             --accent: #fb6f92;
         }
-        body { 
-            font-family: 'Mali', cursive; 
+
+        body {
+            font-family: 'Mali', cursive;
             background-color: #fff5f7;
-            background-image: 
+            background-image:
                 radial-gradient(#ffcad4 1.2px, transparent 1.2px);
             background-size: 20px 20px;
             overflow: hidden;
@@ -27,7 +29,7 @@
             background: #ffffff;
             border: 8px solid #ffffff;
             border-radius: 4rem;
-            box-shadow: 
+            box-shadow:
                 0 25px 50px -12px rgba(251, 111, 146, 0.4),
                 inset 0 -8px 0 #fecdd3;
             position: relative;
@@ -55,12 +57,14 @@
             padding: 14px;
             border: 1px solid #ffe4e6;
         }
+
         .control-btn svg {
             width: 100%;
             height: 100%;
             fill: #fb6f92;
             display: block;
         }
+
         .control-btn:active {
             transform: translateY(4px);
             box-shadow: 0 2px 0 #ffb3c1;
@@ -77,7 +81,10 @@
             z-index: 1000;
             padding: 24px;
         }
-        .modal-overlay.active { display: flex; }
+
+        .modal-overlay.active {
+            display: flex;
+        }
 
         .popup {
             background: white;
@@ -92,8 +99,9 @@
             opacity: 0;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .modal-overlay.active .popup { 
-            transform: scale(1); 
+
+        .modal-overlay.active .popup {
+            transform: scale(1);
             opacity: 1;
         }
 
@@ -106,17 +114,32 @@
             font-weight: 700;
             font-size: 1.1rem;
             box-shadow: 0 6px 15px rgba(251, 111, 146, 0.3);
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
-        .heart-icon { animation: heartBeat 1.5s infinite; }
+        .heart-icon {
+            animation: heartBeat 1.5s infinite;
+        }
+
         @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
     </style>
 </head>
+
 <body class="flex flex-col items-center justify-between min-h-screen p-4 py-8">
+
+    <audio id="bgm" loop muted>
+        <source src="share.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Header -->
     <div class="text-center">
@@ -135,24 +158,33 @@
     <div class="grid grid-cols-3 gap-3">
         <div></div>
         <button id="up" class="control-btn">
-            <svg viewBox="0 0 24 24"><path d="M12 3l-9 9h6v9h6v-9h6z"/></svg>
+            <svg viewBox="0 0 24 24">
+                <path d="M12 3l-9 9h6v9h6v-9h6z" />
+            </svg>
         </button>
         <div></div>
         <button id="left" class="control-btn">
-            <svg viewBox="0 0 24 24"><path d="M3 12l9 9v-6h9v-6h-9v-6z"/></svg>
+            <svg viewBox="0 0 24 24">
+                <path d="M3 12l9 9v-6h9v-6h-9v-6z" />
+            </svg>
         </button>
         <button id="down" class="control-btn">
-            <svg viewBox="0 0 24 24"><path d="M12 21l9-9h-6v-9h-6v9h-6z"/></svg>
+            <svg viewBox="0 0 24 24">
+                <path d="M12 21l9-9h-6v-9h-6v9h-6z" />
+            </svg>
         </button>
         <button id="right" class="control-btn">
-            <svg viewBox="0 0 24 24"><path d="M21 12l-9-9v6h-9v6h9v6z"/></svg>
+            <svg viewBox="0 0 24 24">
+                <path d="M21 12l-9-9v6h-9v6h9v6z" />
+            </svg>
         </button>
     </div>
 
     <!-- Memory Modal -->
     <div id="modalOverlay" class="modal-overlay fixed inset-0">
         <div class="popup">
-            <div class="w-full aspect-square bg-[#fff0f3] rounded-[2.5rem] mb-5 overflow-hidden border-2 border-[#ffe5ec] shadow-inner">
+            <div
+                class="w-full aspect-square bg-[#fff0f3] rounded-[2.5rem] mb-5 overflow-hidden border-2 border-[#ffe5ec] shadow-inner">
                 <img id="modalImg" src="" class="w-full h-full object-cover">
             </div>
             <h2 id="modalTitle" class="text-xl font-bold text-[#fb6f92] mb-2"></h2>
@@ -164,11 +196,12 @@
     </div>
 
     <!-- Final Result -->
-    <div id="finalScene" class="fixed inset-0 bg-white hidden flex-col items-center justify-center p-10 text-center z-[2000]">
+    <div id="finalScene"
+        class="fixed inset-0 bg-white hidden flex-col items-center justify-center p-10 text-center z-[2000]">
         <div class="text-8xl mb-8">🎡</div>
-        <h2 class="text-3xl font-bold text-[#fb6f92] mb-4">เย้ๆๆ บะบี๋เก่งมั้กกก!</h2>
-        <p class="text-slate-400 mb-10 italic">"❤️ ขอบคุณที่เกิดมาให้เค้ารักและเลือกเค้าในวันนั้นนะคั้บ ❤️"</p>
-        <button onclick="location.reload()" class="bg-[#fb6f92] text-white px-12 py-4 rounded-full font-bold shadow-lg shadow-rose-200">Restart Adventure</button>
+        <h2 class="text-3xl font-bold text-[#fb6f92] mb-4">Happy Anniversary 1 ปีนะคั้บบบ</h2>
+        <p class="text-slate-400 mb-10 italic">"❤️ ขอบคุณมากนะบี๋ที่เกิดมาให้เค้ารักและเลือกเค้าในวันนั้นนะคั้บ
+            และก็ขอบคุณตัวเองเหมือนกันที่ตัดสินใจทำให้มันมีจนถึงวันนี้ รูัสึกใช่ตั้งแต่เจอหน้าแล้วคั้บ ❤️"</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -189,14 +222,14 @@
 
         const checkpoints = [
             { x: 80, y: 220, t: "ความประทับใจแรก 🌷", d: "เค้ายังจำได้ดีเลยว่าวันนั้นฟ้าใส่ชุดอะไร ความทรงจำเล็กๆ ที่มีค่าที่สุด", i: "https://images.unsplash.com/photo-1518199266791-5375a83190b7", v: false },
-            { x: 260, y: 140, t: "ที่พักใจของเค้า ☁️", d: "ไม่ว่าวันนั้นจะเหนื่อยแค่ไหน แค่ได้คุยกับฟ้า ทุกอย่างก็หายเป็นปลิดทิ้ง", i: "https://images.unsplash.com/photo-1522673607200-1648832cee98", v: false },
-            { x: 120, y: 50, t: "ของขวัญที่ดีที่สุด 🎁", d: "การมีฟ้าในชีวิตคือของขวัญที่ดีที่สุดที่เค้าเคยได้รับเลยนะ", i: "https://images.unsplash.com/photo-1494972308845-d171197eaa97", v: false }
+            { x: 260, y: 140, t: "ที่พักใจของเค้า ☁️", d: "จริงๆนะเว้ยคือไม่ว่าเค้าจะเหนื่อยแค่ไหน แต่พอใช้เวลาด้วยกัน มันดีขึ้นแบบเว่ออะ", i: "https://images.unsplash.com/photo-1522673607200-1648832cee98", v: false },
+            { x: 120, y: 50, t: "ของขวัญที่ดีที่สุด 🎁", d: "บี๋คือปัจจุบันและอนาคตของเค้าเลยคั้บบ เรามาไกลมากเลยคั้บ เค้าดีใจมากเลย เราจะอยู่ฉลองแบบนี้ไปทุกๆปีเลยนะ", i: "https://images.unsplash.com/photo-1494972308845-d171197eaa97", v: false }
         ];
 
         // Improved Controls
         const handleInput = (id, dx, dy) => {
             const el = document.getElementById(id);
-            const start = (e) => { e.preventDefault(); if(!gameState.isModalOpen) { gameState.player.dx = dx; gameState.player.dy = dy; } };
+            const start = (e) => { e.preventDefault(); if (!gameState.isModalOpen) { gameState.player.dx = dx; gameState.player.dy = dy; } };
             const stop = (e) => { e.preventDefault(); gameState.player.dx = 0; gameState.player.dy = 0; };
             el.addEventListener('touchstart', start);
             el.addEventListener('touchend', stop);
@@ -220,7 +253,7 @@
             ctx.beginPath();
             ctx.moveTo(170, 320);
             checkpoints.forEach((cp, i) => {
-                if(i <= gameState.step) ctx.strokeStyle = '#fb6f92';
+                if (i <= gameState.step) ctx.strokeStyle = '#fb6f92';
                 ctx.lineTo(cp.x, cp.y);
                 ctx.stroke();
                 ctx.beginPath();
@@ -231,9 +264,9 @@
             checkpoints.forEach((cp, i) => {
                 ctx.font = '32px serif';
                 ctx.textAlign = 'center';
-                if(cp.v) {
+                if (cp.v) {
                     ctx.fillText('💖', cp.x, cp.y + 12);
-                } else if(i === gameState.step) {
+                } else if (i === gameState.step) {
                     ctx.save();
                     ctx.shadowBlur = 10;
                     ctx.shadowColor = '#fb6f92';
@@ -252,18 +285,18 @@
             ctx.shadowBlur = 12;
             ctx.shadowColor = 'rgba(251, 111, 146, 0.25)';
             ctx.beginPath();
-            ctx.arc(p.x + p.size/2, p.y + p.size/2, p.size/2 + 3, 0, Math.PI*2);
+            ctx.arc(p.x + p.size / 2, p.y + p.size / 2, p.size / 2 + 3, 0, Math.PI * 2);
             ctx.fillStyle = 'white';
             ctx.fill();
             ctx.beginPath();
-            ctx.arc(p.x + p.size/2, p.y + p.size/2, p.size/2, 0, Math.PI*2);
+            ctx.arc(p.x + p.size / 2, p.y + p.size / 2, p.size / 2, 0, Math.PI * 2);
             ctx.clip();
             ctx.drawImage(charImg, p.x, p.y, p.size, p.size);
             ctx.restore();
         }
 
         function update() {
-            if(gameState.isModalOpen) return;
+            if (gameState.isModalOpen) return;
             const p = gameState.player;
             p.x += p.dx;
             p.y += p.dy;
@@ -271,9 +304,9 @@
             p.y = Math.max(10, Math.min(canvas.height - p.size - 10, p.y));
 
             const target = checkpoints[gameState.step];
-            if(target) {
-                const d = Math.hypot(p.x + p.size/2 - target.x, p.y + p.size/2 - target.y);
-                if(d < 30) {
+            if (target) {
+                const d = Math.hypot(p.x + p.size / 2 - target.x, p.y + p.size / 2 - target.y);
+                if (d < 30) {
                     target.v = true;
                     openModal(target);
                 }
@@ -295,7 +328,7 @@
             setTimeout(() => {
                 gameState.isModalOpen = false;
                 gameState.step++;
-                if(gameState.step >= checkpoints.length) {
+                if (gameState.step >= checkpoints.length) {
                     confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
                     setTimeout(() => {
                         document.getElementById('finalScene').style.display = 'flex';
@@ -313,5 +346,20 @@
         }
         loop();
     </script>
+
+    <script>
+        document.addEventListener("click", () => {
+            const bgm = document.getElementById("bgm");
+
+            bgm.addEventListener("loadedmetadata", () => {
+                bgm.currentTime = 1;
+                bgm.muted = false;
+                bgm.play();
+            }, { once: true });
+
+            bgm.load();
+        }, { once: true });
+    </script>
 </body>
+
 </html>
