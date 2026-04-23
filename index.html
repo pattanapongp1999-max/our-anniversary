@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -13,26 +12,22 @@
             --secondary: #ffb3c1;
             --accent: #fb6f92;
         }
-
-        body {
-            font-family: 'Mali', cursive;
+        body { 
+            font-family: 'Mali', cursive; 
             background-color: #fff5f7;
-            background-image:
-                radial-gradient(#ffcad4 1.2px, transparent 1.2px);
+            background-image: radial-gradient(#ffcad4 1.2px, transparent 1.2px);
             background-size: 20px 20px;
             overflow: hidden;
             touch-action: none;
         }
 
-        /* กรอบเครื่องเล่นเกม */
         .game-console {
             background: #ffffff;
             border: 8px solid #ffffff;
             border-radius: 4rem;
-            box-shadow:
-                0 25px 50px -12px rgba(251, 111, 146, 0.4),
-                inset 0 -8px 0 #fecdd3;
+            box-shadow: 0 25px 50px -12px rgba(251, 111, 146, 0.4), inset 0 -8px 0 #fecdd3;
             position: relative;
+            z-index: 10;
         }
 
         canvas {
@@ -41,7 +36,6 @@
             background: #ffffff;
         }
 
-        /* ปุ่มควบคุมแบบ SVG - ปรับปรุงใหม่ */
         .control-btn {
             background: #ffffff;
             border-radius: 1.5rem;
@@ -57,34 +51,19 @@
             padding: 14px;
             border: 1px solid #ffe4e6;
         }
+        .control-btn svg { width: 100%; height: 100%; fill: #fb6f92; display: block; }
+        .control-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #ffb3c1; background-color: #fff9fa; }
 
-        .control-btn svg {
-            width: 100%;
-            height: 100%;
-            fill: #fb6f92;
-            display: block;
-        }
-
-        .control-btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 #ffb3c1;
-            background-color: #fff9fa;
-        }
-
-        /* หน้าต่างแจ้งเตือน */
         .modal-overlay {
-            background: rgba(255, 175, 190, 0.3);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 175, 190, 0.4);
+            backdrop-filter: blur(12px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             padding: 24px;
         }
-
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
 
         .popup {
             background: white;
@@ -96,14 +75,9 @@
             border: 4px solid #ffffff;
             box-shadow: 0 20px 40px rgba(251, 111, 146, 0.2);
             transform: scale(0.9);
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
-        .modal-overlay.active .popup {
-            transform: scale(1);
-            opacity: 1;
-        }
+        .modal-overlay.active .popup { transform: scale(1); }
 
         .puffy-button {
             background: linear-gradient(180deg, #ffb3c1, #fb6f92);
@@ -112,101 +86,59 @@
             padding: 1.1rem;
             width: 100%;
             font-weight: 700;
-            font-size: 1.1rem;
             box-shadow: 0 6px 15px rgba(251, 111, 146, 0.3);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
-        .heart-icon {
-            animation: heartBeat 1.5s infinite;
-        }
-
-        @keyframes heartBeat {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .heart-icon { animation: heartBeat 1.5s infinite; }
+        @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        
+        /* สติกเกอร์ฉากจบ */
+        .final-sticker { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-15px) rotate(2deg); } }
     </style>
 </head>
 
 <body class="flex flex-col items-center justify-between min-h-screen p-4 py-8">
+    <audio id="bgm" loop muted><source src="scrub.mp3" type="audio/mpeg"></audio>
 
-    <audio id="bgm" loop muted>
-        <source src="scrub.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Header -->
-    <div class="text-center">
-        <h1 class="text-3xl font-bold text-[#fb6f92] flex items-center justify-center gap-2">
+    <div class="text-center relative z-20">
+        <h1 class="text-3xl font-bold text-[#fb6f92] flex items-center justify-center gap-2 drop-shadow-sm">
             Our Journey <span class="heart-icon">💝</span>
         </h1>
-        <p id="status" class="text-[#ff8fa3] text-sm mt-1 font-bold">บี๋ลองเล่นเกมที่เค้าทำดูนะคั้บบ</p>
+        <p id="status" class="text-[#ff8fa3] text-sm mt-1 font-bold bg-white/50 rounded-full px-4 inline-block">บี๋ลองเล่นเกมที่เค้าทำดูนะคั้บบ</p>
     </div>
 
-    <!-- Game Console Screen -->
     <div class="game-console w-full max-w-[340px]">
         <canvas id="gameCanvas" width="340" height="360"></canvas>
     </div>
 
-    <!-- Directional Controls (SVG Fixed) -->
-    <div class="grid grid-cols-3 gap-3">
+    <div class="grid grid-cols-3 gap-3 relative z-20">
         <div></div>
-        <button id="up" class="control-btn">
-            <svg viewBox="0 0 24 24">
-                <path d="M12 3l-9 9h6v9h6v-9h6z" />
-            </svg>
-        </button>
+        <button id="up" class="control-btn"><svg viewBox="0 0 24 24"><path d="M12 3l-9 9h6v9h6v-9h6z"/></svg></button>
         <div></div>
-        <button id="left" class="control-btn">
-            <svg viewBox="0 0 24 24">
-                <path d="M3 12l9 9v-6h9v-6h-9v-6z" />
-            </svg>
-        </button>
-        <button id="down" class="control-btn">
-            <svg viewBox="0 0 24 24">
-                <path d="M12 21l9-9h-6v-9h-6v9h-6z" />
-            </svg>
-        </button>
-        <button id="right" class="control-btn">
-            <svg viewBox="0 0 24 24">
-                <path d="M21 12l-9-9v6h-9v6h9v6z" />
-            </svg>
-        </button>
+        <button id="left" class="control-btn"><svg viewBox="0 0 24 24"><path d="M3 12l9 9v-6h9v-6h-9v-6z"/></svg></button>
+        <button id="down" class="control-btn"><svg viewBox="0 0 24 24"><path d="M12 21l9-9h-6v-9h-6v9h-6z"/></svg></button>
+        <button id="right" class="control-btn"><svg viewBox="0 0 24 24"><path d="M21 12l-9-9v6h-9v6h9v6z"/></svg></button>
     </div>
 
-    <!-- Memory Modal -->
     <div id="modalOverlay" class="modal-overlay fixed inset-0">
         <div class="popup">
-            <div
-                class="w-full aspect-square bg-[#fff0f3] rounded-[2.5rem] mb-5 overflow-hidden border-2 border-[#ffe5ec] shadow-inner">
+            <div class="w-full aspect-square bg-[#fff0f3] rounded-[2.5rem] mb-5 overflow-hidden border-2 border-[#ffe5ec] shadow-inner">
                 <img id="modalImg" src="" class="w-full h-full object-cover">
             </div>
             <h2 id="modalTitle" class="text-xl font-bold text-[#fb6f92] mb-2"></h2>
-            <p id="modalDesc" class="text-slate-500 text-xs mb-6 px-2"></p>
-            <button id="closeBtn" class="puffy-button active:scale-95 transition-transform">
-                ไปต่อเลยยย ❤️
-            </button>
+            <p id="modalDesc" class="text-slate-500 text-xs mb-6 px-4 leading-relaxed"></p>
+            <button id="closeBtn" class="puffy-button active:scale-95 transition-transform">ไปต่อเลยยย ❤️</button>
         </div>
     </div>
 
-    <!-- Final Result -->
-    <div id="finalScene"
-        class="fixed inset-0 bg-white hidden flex-col items-center justify-center p-10 text-center z-[2000]">
-        <div
-            class="final-sticker relative w-40 h-40 mb-10 overflow-hidden rounded-full border-8 border-white shadow-2xl">
-            <img src="story.jpg"
-                alt="Our Special Memory" class="w-full h-full object-cover">
+    <div id="finalScene" class="fixed inset-0 bg-white hidden flex-col items-center justify-center p-8 text-center z-[2000]">
+        <div class="final-sticker relative w-48 h-48 mb-8 overflow-hidden rounded-full border-8 border-white shadow-2xl">
+            <img src="story.jpg" alt="Our Special Memory" class="w-full h-full object-cover">
         </div>
-        <h2 class="text-3xl font-bold text-[#fb6f92] mb-4" style="line-height: 1.7;">Happy Anniversary 1 ปีนะคั้บบบ</h2>
-        <p class="text-slate-400 mb-10 italic">"❤️ บี๋คือปัจจุบันและอนาคตของเค้าเลยคั้บบ เรามาไกลมากเลยคั้บ
-            ตอนคบตอนแรกเค้าไม่เคยคิดถึงจุดนี้เลย แต่ตอนนี้เค้าคิดเยอะมาก เค้าอยากให้มันเป็นจริงมากเลยนะคั้บบี๋
-            แต่นี่มาถึง ถึงขั้นครอบครัวไรแล้วอะ เค้าดีใจมากเลย เราจะอยู่ฉลองแบบนี้ไปทุกๆปีเลยนะ❤️"</p>
+        <h2 class="text-3xl font-bold text-[#fb6f92] mb-4 leading-relaxed">Happy Anniversary 1 ปีนะคั้บบบ</h2>
+        <p class="text-slate-500 text-sm italic max-w-sm">"❤️ บี๋คือปัจจุบันและอนาคตของเค้าเลยคั้บบ เรามาไกลมากเลยนะ เราจะอยู่ฉลองแบบนี้ไปทุกๆปีเลยนะ❤️"</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -216,31 +148,35 @@
         const overlay = document.getElementById('modalOverlay');
         const statusText = document.getElementById('status');
 
+        // Preload Images
+        const imgCache = {};
+        const preload = (urls) => urls.forEach(url => {
+            const img = new Image(); img.src = url; imgCache[url] = img;
+        });
+        preload(['anniver-1-1.jpg', 'anniver-3.jpg', 'anniver-4.jpg', 'story.jpg', 'https://cdn-icons-png.flaticon.com/512/4392/4392471.png']);
+
         const charImg = new Image();
         charImg.src = 'https://cdn-icons-png.flaticon.com/512/4392/4392471.png';
 
         let gameState = {
             step: 0,
             isModalOpen: false,
-            player: { x: 145, y: 280, size: 50, speed: 5, dx: 0, dy: 0 }
+            player: { x: 145, y: 280, size: 50, speed: 5, dx: 0, dy: 0 },
+            particles: []
         };
 
         const checkpoints = [
             { x: 80, y: 220, t: "ความประทับใจแรก 🌷", d: "หน้าเหวี่ยง ตัวสูง แล้วยังคุยกับเค้าแบบถูกคอมาก ตอนนี้เป็นไง ถูกใจมั้ยล่ะ", i: "anniver-1-1.jpg", v: false },
             { x: 260, y: 140, t: "ที่พักใจของเค้า ☁️", d: "จริงๆนะเว้ยคือไม่ว่าเค้าจะเหนื่อยแค่ไหน แต่พอใช้เวลาด้วยกัน มันดีขึ้นแบบเว่ออะ", i: "anniver-3.jpg", v: false },
-            { x: 120, y: 50, t: "ของขวัญที่ดีที่สุด 🎁", d: "ขอบคุณมากนะบี๋ที่เกิดมาให้เค้ารักและเลือกเค้าในวันนั้นนะคั้บ และก็ขอบคุณตัวเองเหมือนกันที่ตัดสินใจทำให้มันมีจนถึงวันนี้", i: "anniver-4.jpg", v: false }
+            { x: 120, y: 50, t: "ของขวัญที่ดีที่สุด 🎁", d: "ขอบคุณมากนะบี๋ที่เกิดมาให้เค้ารักและเลือกเค้าในวันนั้นนะคั้บ", i: "anniver-4.jpg", v: false }
         ];
 
-        // Improved Controls
         const handleInput = (id, dx, dy) => {
             const el = document.getElementById(id);
             const start = (e) => { e.preventDefault(); if (!gameState.isModalOpen) { gameState.player.dx = dx; gameState.player.dy = dy; } };
             const stop = (e) => { e.preventDefault(); gameState.player.dx = 0; gameState.player.dy = 0; };
-            el.addEventListener('touchstart', start);
-            el.addEventListener('touchend', stop);
-            el.addEventListener('mousedown', start);
-            el.addEventListener('mouseup', stop);
-            el.addEventListener('mouseleave', stop);
+            ['touchstart', 'mousedown'].forEach(evt => el.addEventListener(evt, start));
+            ['touchend', 'mouseup', 'mouseleave'].forEach(evt => el.addEventListener(evt, stop));
         };
 
         handleInput('up', 0, -gameState.player.speed);
@@ -248,10 +184,32 @@
         handleInput('left', -gameState.player.speed, 0);
         handleInput('right', gameState.player.speed, 0);
 
+        function createParticle(x, y) {
+            if (Math.random() > 0.8) {
+                gameState.particles.push({
+                    x: x + 25, y: y + 25,
+                    size: Math.random() * 15 + 5,
+                    life: 1,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 2
+                });
+            }
+        }
+
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Path
+            // Particles Trail
+            gameState.particles.forEach((p, i) => {
+                ctx.globalAlpha = p.life;
+                ctx.font = `${p.size}px serif`;
+                ctx.fillText('✨', p.x, p.y);
+                p.x += p.vx; p.y += p.vy; p.life -= 0.02;
+                if(p.life <= 0) gameState.particles.splice(i, 1);
+            });
+            ctx.globalAlpha = 1;
+
+            // Path Line
             ctx.setLineDash([10, 10]);
             ctx.strokeStyle = '#ffe4e6';
             ctx.lineWidth = 4;
@@ -260,72 +218,52 @@
             checkpoints.forEach((cp, i) => {
                 if (i <= gameState.step) ctx.strokeStyle = '#fb6f92';
                 ctx.lineTo(cp.x, cp.y);
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.moveTo(cp.x, cp.y);
+                ctx.stroke(); ctx.beginPath(); ctx.moveTo(cp.x, cp.y);
             });
 
             // Target Hearts
             checkpoints.forEach((cp, i) => {
                 ctx.font = '32px serif';
                 ctx.textAlign = 'center';
-                if (cp.v) {
-                    ctx.fillText('💖', cp.x, cp.y + 12);
-                } else if (i === gameState.step) {
-                    ctx.save();
-                    ctx.shadowBlur = 10;
-                    ctx.shadowColor = '#fb6f92';
-                    ctx.fillText('🤍', cp.x, cp.y + 12);
-                    ctx.restore();
-                } else {
-                    ctx.globalAlpha = 0.3;
-                    ctx.fillText('🔒', cp.x, cp.y + 12);
-                    ctx.globalAlpha = 1.0;
-                }
+                if (cp.v) ctx.fillText('💖', cp.x, cp.y + 12);
+                else if (i === gameState.step) {
+                    ctx.save(); ctx.shadowBlur = 15; ctx.shadowColor = '#fb6f92';
+                    ctx.fillText('🤍', cp.x, cp.y + 12); ctx.restore();
+                } else { ctx.globalAlpha = 0.2; ctx.fillText('🔒', cp.x, cp.y + 12); ctx.globalAlpha = 1; }
             });
 
-            // Character
+            // Player
             const p = gameState.player;
+            if(p.dx !== 0 || p.dy !== 0) createParticle(p.x, p.y);
+            
             ctx.save();
-            ctx.shadowBlur = 12;
-            ctx.shadowColor = 'rgba(251, 111, 146, 0.25)';
+            ctx.shadowBlur = 12; ctx.shadowColor = 'rgba(251, 111, 146, 0.3)';
             ctx.beginPath();
-            ctx.arc(p.x + p.size / 2, p.y + p.size / 2, p.size / 2 + 3, 0, Math.PI * 2);
-            ctx.fillStyle = 'white';
-            ctx.fill();
+            ctx.arc(p.x + 25, p.y + 25, 28, 0, Math.PI * 2);
+            ctx.fillStyle = 'white'; ctx.fill();
             ctx.beginPath();
-            ctx.arc(p.x + p.size / 2, p.y + p.size / 2, p.size / 2, 0, Math.PI * 2);
+            ctx.arc(p.x + 25, p.y + 25, 25, 0, Math.PI * 2);
             ctx.clip();
-            ctx.drawImage(charImg, p.x, p.y, p.size, p.size);
+            ctx.drawImage(charImg, p.x, p.y, 50, 50);
             ctx.restore();
         }
 
         function update() {
             if (gameState.isModalOpen) return;
             const p = gameState.player;
-            p.x += p.dx;
-            p.y += p.dy;
-            p.x = Math.max(10, Math.min(canvas.width - p.size - 10, p.x));
-            p.y = Math.max(10, Math.min(canvas.height - p.size - 10, p.y));
+            p.x = Math.max(10, Math.min(canvas.width - 60, p.x + p.dx));
+            p.y = Math.max(10, Math.min(canvas.height - 60, p.y + p.dy));
 
             const target = checkpoints[gameState.step];
-            if (target) {
-                const d = Math.hypot(p.x + p.size / 2 - target.x, p.y + p.size / 2 - target.y);
-                if (d < 30) {
-                    target.v = true;
-                    openModal(target);
-                }
+            if (target && Math.hypot(p.x + 25 - target.x, p.y + 25 - target.y) < 30) {
+                target.v = true;
+                gameState.isModalOpen = true;
+                p.dx = 0; p.dy = 0;
+                document.getElementById('modalTitle').innerText = target.t;
+                document.getElementById('modalDesc').innerText = target.d;
+                document.getElementById('modalImg').src = target.i;
+                overlay.classList.add('active');
             }
-        }
-
-        function openModal(cp) {
-            gameState.isModalOpen = true;
-            gameState.player.dx = 0;
-            gameState.player.dy = 0;
-            document.getElementById('modalTitle').innerText = cp.t;
-            document.getElementById('modalDesc').innerText = cp.d;
-            document.getElementById('modalImg').src = cp.i;
-            overlay.classList.add('active');
         }
 
         document.getElementById('closeBtn').onclick = () => {
@@ -334,37 +272,24 @@
                 gameState.isModalOpen = false;
                 gameState.step++;
                 if (gameState.step >= checkpoints.length) {
-                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-                    setTimeout(() => {
-                        document.getElementById('finalScene').style.display = 'flex';
-                    }, 500);
+                    confetti({ particleCount: 200, spread: 90, origin: { y: 0.7 } });
+                    setTimeout(() => document.getElementById('finalScene').style.display = 'flex', 600);
                 } else {
                     statusText.innerText = `ด่านต่อไป: ${checkpoints[gameState.step].t}`;
                 }
             }, 300);
         };
 
-        function loop() {
-            update();
-            draw();
-            requestAnimationFrame(loop);
-        }
+        const loop = () => { update(); draw(); requestAnimationFrame(loop); };
         loop();
-    </script>
 
-    <script>
+        // Audio Handler
         document.addEventListener("click", () => {
             const bgm = document.getElementById("bgm");
-
-            bgm.addEventListener("loadedmetadata", () => {
-                bgm.currentTime = 225;
-                bgm.muted = false;
-                bgm.play();
-            }, { once: true });
-
-            bgm.load();
+            bgm.muted = false;
+            bgm.currentTime = 225; // เริ่มวินาทีที่ 225 ตามที่ตั้งไว้
+            bgm.play().catch(() => {});
         }, { once: true });
     </script>
 </body>
-
 </html>
