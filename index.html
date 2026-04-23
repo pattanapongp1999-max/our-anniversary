@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -12,8 +13,9 @@
             --secondary: #ffb3c1;
             --accent: #fb6f92;
         }
-        body { 
-            font-family: 'Mali', cursive; 
+
+        body {
+            font-family: 'Mali', cursive;
             background-color: #fff5f7;
             background-image: radial-gradient(#ffcad4 1.2px, transparent 1.2px);
             background-size: 20px 20px;
@@ -51,8 +53,19 @@
             padding: 14px;
             border: 1px solid #ffe4e6;
         }
-        .control-btn svg { width: 100%; height: 100%; fill: #fb6f92; display: block; }
-        .control-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #ffb3c1; background-color: #fff9fa; }
+
+        .control-btn svg {
+            width: 100%;
+            height: 100%;
+            fill: #fb6f92;
+            display: block;
+        }
+
+        .control-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #ffb3c1;
+            background-color: #fff9fa;
+        }
 
         .modal-overlay {
             background: rgba(255, 175, 190, 0.4);
@@ -63,7 +76,11 @@
             z-index: 1000;
             padding: 24px;
         }
-        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
 
         .popup {
             background: white;
@@ -77,7 +94,10 @@
             transform: scale(0.9);
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .modal-overlay.active .popup { transform: scale(1); }
+
+        .modal-overlay.active .popup {
+            transform: scale(1);
+        }
 
         .puffy-button {
             background: linear-gradient(180deg, #ffb3c1, #fb6f92);
@@ -89,24 +109,62 @@
             box-shadow: 0 6px 15px rgba(251, 111, 146, 0.3);
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .heart-icon { animation: heartBeat 1.5s infinite; }
-        @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .heart-icon {
+            animation: heartBeat 1.5s infinite;
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
         /* สติกเกอร์ฉากจบ */
-        .final-sticker { animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-15px) rotate(2deg); } }
+        .final-sticker {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(2deg);
+            }
+        }
     </style>
 </head>
 
 <body class="flex flex-col items-center justify-between min-h-screen p-4 py-8">
-    <audio id="bgm" loop muted><source src="scrub.mp3" type="audio/mpeg"></audio>
+    <audio id="bgm" loop muted>
+        <source src="scrub.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="text-center relative z-20">
         <h1 class="text-3xl font-bold text-[#fb6f92] flex items-center justify-center gap-2 drop-shadow-sm">
             Our Journey <span class="heart-icon">💝</span>
         </h1>
-        <p id="status" class="text-[#ff8fa3] text-sm mt-1 font-bold bg-white/50 rounded-full px-4 inline-block">บี๋ลองเล่นเกมที่เค้าทำดูนะคั้บบ</p>
+        <p id="status" class="text-[#ff8fa3] text-sm mt-1 font-bold bg-white/50 rounded-full px-4 inline-block">
+            บี๋ลองเล่นเกมที่เค้าทำดูนะคั้บบ</p>
     </div>
 
     <div class="game-console w-full max-w-[340px]">
@@ -115,16 +173,25 @@
 
     <div class="grid grid-cols-3 gap-3 relative z-20">
         <div></div>
-        <button id="up" class="control-btn"><svg viewBox="0 0 24 24"><path d="M12 3l-9 9h6v9h6v-9h6z"/></svg></button>
+        <button id="up" class="control-btn"><svg viewBox="0 0 24 24">
+                <path d="M12 3l-9 9h6v9h6v-9h6z" />
+            </svg></button>
         <div></div>
-        <button id="left" class="control-btn"><svg viewBox="0 0 24 24"><path d="M3 12l9 9v-6h9v-6h-9v-6z"/></svg></button>
-        <button id="down" class="control-btn"><svg viewBox="0 0 24 24"><path d="M12 21l9-9h-6v-9h-6v9h-6z"/></svg></button>
-        <button id="right" class="control-btn"><svg viewBox="0 0 24 24"><path d="M21 12l-9-9v6h-9v6h9v6z"/></svg></button>
+        <button id="left" class="control-btn"><svg viewBox="0 0 24 24">
+                <path d="M3 12l9 9v-6h9v-6h-9v-6z" />
+            </svg></button>
+        <button id="down" class="control-btn"><svg viewBox="0 0 24 24">
+                <path d="M12 21l9-9h-6v-9h-6v9h-6z" />
+            </svg></button>
+        <button id="right" class="control-btn"><svg viewBox="0 0 24 24">
+                <path d="M21 12l-9-9v6h-9v6h9v6z" />
+            </svg></button>
     </div>
 
     <div id="modalOverlay" class="modal-overlay fixed inset-0">
         <div class="popup">
-            <div class="w-full aspect-square bg-[#fff0f3] rounded-[2.5rem] mb-5 overflow-hidden border-2 border-[#ffe5ec] shadow-inner">
+            <div
+                class="w-full aspect-square bg-[#fff0f3] rounded-[2.5rem] mb-5 overflow-hidden border-2 border-[#ffe5ec] shadow-inner">
                 <img id="modalImg" src="" class="w-full h-full object-cover">
             </div>
             <h2 id="modalTitle" class="text-xl font-bold text-[#fb6f92] mb-2"></h2>
@@ -133,12 +200,15 @@
         </div>
     </div>
 
-    <div id="finalScene" class="fixed inset-0 bg-white hidden flex-col items-center justify-center p-8 text-center z-[2000]">
-        <div class="final-sticker relative w-48 h-48 mb-8 overflow-hidden rounded-full border-8 border-white shadow-2xl">
+    <div id="finalScene"
+        class="fixed inset-0 bg-white hidden flex-col items-center justify-center p-8 text-center z-[2000]">
+        <div
+            class="final-sticker relative w-48 h-48 mb-8 overflow-hidden rounded-full border-8 border-white shadow-2xl">
             <img src="story.jpg" alt="Our Special Memory" class="w-full h-full object-cover">
         </div>
         <h2 class="text-3xl font-bold text-[#fb6f92] mb-4 leading-relaxed">Happy Anniversary 1 ปีนะคั้บบบ</h2>
-        <p class="text-slate-500 text-sm italic max-w-sm">"❤️ บี๋คือปัจจุบันและอนาคตของเค้าเลยคั้บบ เรามาไกลมากเลยนะ เราจะอยู่ฉลองแบบนี้ไปทุกๆปีเลยนะ❤️"</p>
+        <p class="text-slate-500 text-sm italic max-w-sm">❤️ บี๋คือปัจจุบันและอนาคตของเค้าเลยคั้บบ เรามาไกลมากเลยคั้บ ตอนคบตอนแรกเค้าไม่เคยคิดถึงจุดนี้เลย แต่ตอนนี้เค้าคิดเยอะมาก
+            เค้าอยากให้มันเป็นจริงมากเลยนะคั้บบี๋ แต่นี่มาถึง ถึงขั้นครอบครัวไรแล้วอะ เค้าดีใจมากเลย เราจะอยู่ฉลองแบบนี้ไปทุกๆปีเลยนะ❤️</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -168,7 +238,7 @@
         const checkpoints = [
             { x: 80, y: 220, t: "ความประทับใจแรก 🌷", d: "หน้าเหวี่ยง ตัวสูง แล้วยังคุยกับเค้าแบบถูกคอมาก ตอนนี้เป็นไง ถูกใจมั้ยล่ะ", i: "anniver-1-1.jpg", v: false },
             { x: 260, y: 140, t: "ที่พักใจของเค้า ☁️", d: "จริงๆนะเว้ยคือไม่ว่าเค้าจะเหนื่อยแค่ไหน แต่พอใช้เวลาด้วยกัน มันดีขึ้นแบบเว่ออะ", i: "anniver-3.jpg", v: false },
-            { x: 120, y: 50, t: "ของขวัญที่ดีที่สุด 🎁", d: "ขอบคุณมากนะบี๋ที่เกิดมาให้เค้ารักและเลือกเค้าในวันนั้นนะคั้บ", i: "anniver-4.jpg", v: false }
+            { x: 120, y: 50, t: "ของขวัญที่ดีที่สุด 🎁", d: "ขอบคุณมากนะบี๋ที่เกิดมาให้เค้ารักและเลือกเค้าในวันนั้นนะคั้บ และก็ขอบคุณตัวเองเหมือนกันที่ตัดสินใจทำให้มันมีจนถึงวันนี้", i: "anniver-4.jpg", v: false }
         ];
 
         const handleInput = (id, dx, dy) => {
@@ -205,7 +275,7 @@
                 ctx.font = `${p.size}px serif`;
                 ctx.fillText('✨', p.x, p.y);
                 p.x += p.vx; p.y += p.vy; p.life -= 0.02;
-                if(p.life <= 0) gameState.particles.splice(i, 1);
+                if (p.life <= 0) gameState.particles.splice(i, 1);
             });
             ctx.globalAlpha = 1;
 
@@ -234,8 +304,8 @@
 
             // Player
             const p = gameState.player;
-            if(p.dx !== 0 || p.dy !== 0) createParticle(p.x, p.y);
-            
+            if (p.dx !== 0 || p.dy !== 0) createParticle(p.x, p.y);
+
             ctx.save();
             ctx.shadowBlur = 12; ctx.shadowColor = 'rgba(251, 111, 146, 0.3)';
             ctx.beginPath();
@@ -288,8 +358,9 @@
             const bgm = document.getElementById("bgm");
             bgm.muted = false;
             bgm.currentTime = 225; // เริ่มวินาทีที่ 225 ตามที่ตั้งไว้
-            bgm.play().catch(() => {});
+            bgm.play().catch(() => { });
         }, { once: true });
     </script>
 </body>
+
 </html>
