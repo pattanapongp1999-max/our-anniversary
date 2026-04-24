@@ -58,7 +58,6 @@
             width: 100%;
             height: 100%;
             fill: #fb6f92;
-            display: block;
         }
 
         .control-btn:active {
@@ -135,7 +134,6 @@
             }
         }
 
-        /* สติกเกอร์ฉากจบ */
         .final-sticker {
             animation: float 3s ease-in-out infinite;
         }
@@ -151,6 +149,41 @@
                 transform: translateY(-15px) rotate(2deg);
             }
         }
+
+        /* เอฟเฟกต์หัวใจลอยเบื้องหลังฉากจบ */
+        .bg-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: #fb6f92;
+            opacity: 0;
+            animation: floatUp 4s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(110vh) scale(0);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1.5);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -164,7 +197,8 @@
             Our Journey <span class="heart-icon">💝</span>
         </h1>
         <p id="status" class="text-[#ff8fa3] text-sm mt-1 font-bold bg-white/50 rounded-full px-4 inline-block">
-            บี๋ลองเล่นเกมที่เค้าทำดูนะคั้บบ</p>
+            บี๋ลองเล่นเกมที่เค้าทำดูนะคั้บบ
+        </p>
     </div>
 
     <div class="game-console w-full max-w-[340px]">
@@ -200,15 +234,23 @@
         </div>
     </div>
 
+    <!-- Final Scene -->
     <div id="finalScene"
         class="fixed inset-0 bg-white hidden flex-col items-center justify-center p-8 text-center z-[2000]">
+        <div class="bg-hearts" id="bgHearts"></div>
         <div
-            class="final-sticker relative w-48 h-48 mb-8 overflow-hidden rounded-full border-8 border-white shadow-2xl">
-            <img src="story.jpg" alt="Our Special Memory" class="w-full h-full object-cover">
+            class="final-sticker relative w-56 h-56 mb-8 overflow-hidden rounded-full border-8 border-white shadow-2xl">
+            <img src="anniver-5.jpg" alt="Our Special Memory" class="w-full h-full object-cover">
         </div>
         <h2 class="text-3xl font-bold text-[#fb6f92] mb-4 leading-relaxed">Happy Anniversary 1 ปีนะคั้บบบ</h2>
-        <p class="text-slate-500 text-sm italic max-w-sm">❤️ บี๋คือปัจจุบันและอนาคตของเค้าเลยคั้บบ เรามาไกลมากเลยคั้บ ตอนคบตอนแรกเค้าไม่เคยคิดถึงจุดนี้เลย แต่ตอนนี้เค้าคิดเยอะมาก
-            เค้าอยากให้มันเป็นจริงมากเลยนะคั้บบี๋ แต่นี่มาถึง ถึงขั้นครอบครัวไรแล้วอะ เค้าดีใจมากเลย เราจะอยู่ฉลองแบบนี้ไปทุกๆปีเลยนะ❤️</p>
+        <p class="text-slate-500 text-sm italic max-w-sm leading-relaxed mb-6">
+            ❤️ บี๋คือปัจจุบันและอนาคตของเค้าเลยคั้บบ ตอนคบตอนแรกเค้าไม่เคยคิดว่าจะมาถึงจุดนี้เลย
+            แต่ตอนนี้เกินกว่าที่คิดเยอะมาก เรามาไกลมากเลยคั้บ แต่มันจะยังไกลกว่านี้อีกเยอะนะ มาถึงขั้นครอบครัวไรแล้วอะ
+            เค้าอยากให้ความฝันทุกอย่างมันเป็นจริงมากเลยนะคั้บบี๋ เค้าดีใจมากเลย เราจะอยู่ฉลองแบบนี้ไปทุกๆปีเลยนะ ❤️
+        </p>
+        <button onclick="location.reload()"
+            class="text-[#fb6f92] font-bold border-2 border-[#fb6f92] px-6 py-2 rounded-full active:scale-90 transition-all">เริ่มใหม่
+            🔁</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -223,7 +265,7 @@
         const preload = (urls) => urls.forEach(url => {
             const img = new Image(); img.src = url; imgCache[url] = img;
         });
-        preload(['anniver-1-1.jpg', 'anniver-3.jpg', 'anniver-4.jpg', 'story.jpg', 'https://cdn-icons-png.flaticon.com/512/4392/4392471.png']);
+        preload(['anniver-1-1.jpg', 'anniver-3.jpg', 'anniver-4.jpg', 'anniver-5.jpg', 'chino-bg.jpg']);
 
         const charImg = new Image();
         charImg.src = 'chino-bg.jpg';
@@ -231,7 +273,8 @@
         let gameState = {
             step: 0,
             isModalOpen: false,
-            player: { x: 145, y: 280, size: 50, speed: 5, dx: 0, dy: 0 },
+            // ลด speed ลงจาก 5 เป็น 3
+            player: { x: 145, y: 280, size: 50, speed: 3, dx: 0, dy: 0 },
             particles: []
         };
 
@@ -279,17 +322,7 @@
             });
             ctx.globalAlpha = 1;
 
-            // Path Line
-            ctx.setLineDash([10, 10]);
-            ctx.strokeStyle = '#ffe4e6';
-            ctx.lineWidth = 4;
-            ctx.beginPath();
-            ctx.moveTo(170, 320);
-            checkpoints.forEach((cp, i) => {
-                if (i <= gameState.step) ctx.strokeStyle = '#fb6f92';
-                ctx.lineTo(cp.x, cp.y);
-                ctx.stroke(); ctx.beginPath(); ctx.moveTo(cp.x, cp.y);
-            });
+            // --- ลบส่วน Path Line (เส้นประ) ออกตามคำขอ ---
 
             // Target Hearts
             checkpoints.forEach((cp, i) => {
@@ -314,7 +347,7 @@
             ctx.beginPath();
             ctx.arc(p.x + 25, p.y + 25, 25, 0, Math.PI * 2);
             ctx.clip();
-            ctx.drawImage(charImg, p.x, p.y, 50, 50);
+            if (charImg.complete) ctx.drawImage(charImg, p.x, p.y, 50, 50);
             ctx.restore();
         }
 
@@ -336,14 +369,63 @@
             }
         }
 
+        // ฟังก์ชันสร้างหัวใจลอยในฉากจบ
+        function createFloatingHearts() {
+            const container = document.getElementById('bgHearts');
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.innerHTML = ['❤️', '💖', '💗', '✨', '🌸'][Math.floor(Math.random() * 5)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                    heart.style.animationDelay = (Math.random() * 3) + 's';
+                    container.appendChild(heart);
+                }, i * 150);
+            }
+        }
+
+        // ฟังก์ชันยิง Confetti แบบต่อเนื่อง
+        function fireContinuousConfetti() {
+            const end = Date.now() + (5 * 1000); // ยิงนาน 5 วินาที
+            const colors = ['#fb6f92', '#ff8fa3', '#ffb3c1', '#ffffff'];
+
+            (function frame() {
+                confetti({
+                    particleCount: 4,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: colors
+                });
+                confetti({
+                    particleCount: 4,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: colors
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
         document.getElementById('closeBtn').onclick = () => {
             overlay.classList.remove('active');
             setTimeout(() => {
                 gameState.isModalOpen = false;
                 gameState.step++;
                 if (gameState.step >= checkpoints.length) {
-                    confetti({ particleCount: 200, spread: 90, origin: { y: 0.7 } });
-                    setTimeout(() => document.getElementById('finalScene').style.display = 'flex', 600);
+                    // เอฟเฟกต์ฉากจบ
+                    setTimeout(() => {
+                        document.getElementById('finalScene').style.display = 'flex';
+                        fireContinuousConfetti();
+                        createFloatingHearts();
+                        // ยิงพลุลูกใหญ่อีกรอบตรงกลาง
+                        confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 }, scalar: 1.2 });
+                    }, 600);
                 } else {
                     statusText.innerText = `ด่านต่อไป: ${checkpoints[gameState.step].t}`;
                 }
@@ -353,11 +435,10 @@
         const loop = () => { update(); draw(); requestAnimationFrame(loop); };
         loop();
 
-        // Audio Handler
         document.addEventListener("click", () => {
             const bgm = document.getElementById("bgm");
             bgm.muted = false;
-            bgm.currentTime = 225; // เริ่มวินาทีที่ 225 ตามที่ตั้งไว้
+            bgm.currentTime = 225;
             bgm.play().catch(() => { });
         }, { once: true });
     </script>
